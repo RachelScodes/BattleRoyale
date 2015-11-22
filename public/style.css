@@ -5,3 +5,13 @@
    top: -10px;
    left: -10px;
 }
+
+
+footer {
+   text-align: center;
+   float: left;
+   width: 100%;
+   position: absolute;
+   bottom: 0;
+   padding: 15px;
+}
