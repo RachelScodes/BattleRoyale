@@ -8,7 +8,6 @@ let jwt = require('jsonwebtoken');
 let logger = require('morgan');
 let path = require('path');
 let io = require('socket.io');
-let home = require('./controllers/home_controller' );
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -29,7 +28,11 @@ app.get('/', function(req, res){ // test route // delete later
   res.send('hit test route!');
 });
 
-app.use('/home', home);
+let homeRoutes = require('./controllers/home_controller' );
+app.use('/home', homeRoutes);
+
+let gameRoutes = require('./controllers/game_controller' );
+app.use('/home', gameRoutes);
 
 
 
