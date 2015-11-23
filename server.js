@@ -31,10 +31,9 @@ app.get('/', function(req, res){ // test route // delete later
 let homeRoutes = require('./controllers/home_controller' );
 app.use('/home', homeRoutes);
 
+// not needed because we'll be using ajax to make requests?
 let gameRoutes = require('./controllers/game_controller' );
-app.use('/home', gameRoutes);
-
-
+app.use('/game', gameRoutes);
 
 
 
