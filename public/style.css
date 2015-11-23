@@ -5,23 +5,19 @@ body {
    margin: 0;
    overflow: hidden;
 }
-#user-list{
+
+#top-nav {
     width: 74.5%;
-    margin-right: 250px;
+    height: 50px;
     border: 2px solid white;
-    height: 80px;
-    float: left;
-    position: absolute;
 }
 
 #quit {
-    z-index: 20;
     width: 100px;
     height: 30px;
     float: right;
-    position: relative;
-    margin-right: 27%;
-    margin-top: 2%;
+    margin-top: 8px;
+    margin-right: 8px;
 }
 
 #chat-window{
@@ -29,30 +25,30 @@ body {
    width: 25%;
    height: 100%;
    border: 2px solid white;
-   top: 0;
-   right: 0;
    position: absolute;
-   overflow-y: scroll
+   right: 0;
+   top: 0;
 }
 
 #type-window {
-    width: 74.5%;
-    margin-right: 250px;
-    border: 2px solid white;
-    height: 80px;
-    float: left;
-    bottom: 30px;
-    position: absolute;
+   width: 74.5%;
+   margin-right: 250px;
+   border: 2px solid white;
+   height: 80px;
+   float: left;
+   bottom: 15px;
+   position: absolute;
 }
 
 footer {
    text-align: center;
-   height: 30px;
    float: left;
    width: 100%;
    position: absolute;
    bottom: 0;
-   border-top: 2px solid blue;
+   border: 2px solid blue;
+   left: 0;
    background-color: black;
    color: white;
+   height: 20px;
 }
