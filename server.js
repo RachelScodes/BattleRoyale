@@ -39,6 +39,19 @@ app.use('/home', homeRoutes);
 
 
 
+///// parse trivia questions API  //////////////////////////////////////////////
+var parseTrivaApi = function(data, attr) {
+  jsonData = JSON.parse(data);
+  questionData = [];
+  for (var i = 0; i < jsonData.length; i++) {
+    questionData.push(jsonData[i][attr])
+  };
+  return newData;
+};
+
+
+
+
 
 ///// server ///////////////////////////////////////////////////////////////////
 let server = app.listen(3000, () => {

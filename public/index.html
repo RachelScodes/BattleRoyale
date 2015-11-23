@@ -2,6 +2,7 @@
 <html>
    <head>
       <meta charset="utf-8">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
       <title>Battle Royale</title>
       <link rel="stylesheet" href="style.css" charset="utf-8">
       <script src="app.js"></script>
@@ -26,12 +27,21 @@
             <!-- waiting/room select -->
             <div id="lobby"></div>
             <!-- trivia game in room -->
-            <div id="game"></div>
+            <div id="game">
+              <!-- click to get trivia questions -->
+              <div>
+                <button class="get-question">Get Question</button>
+              </div>
+              <!-- append question data here -->
+              <div class="selected-question">
+              </div>
+            </div>
          </div>
 
          <!-- div to enter text -->
          <div id="type-window"></div>
       </div>
+      <script src="script.js"></script>
       <footer>Copyright 2015 by <a href="https://github.com/m428" target="_blank">Mala Nimalasuriya,</a> <a href="https://github.com/RachelScodes" target="_blank">Rachel Smyth,</a> <a href="https://github.com/sp180" target="_blank">Alex Wang</a>. View source on <a href="https://github.com/RachelScodes/BattleRoyale" target="_blank">Github</a></footer>
    </body>
 </html>
