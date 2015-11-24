@@ -30,8 +30,6 @@ for (var i = 0; i < 10; i++){
 
 
 
-
-
 code graveyard
 while (room.questions.length < 10) {
    console.log(room.length);
