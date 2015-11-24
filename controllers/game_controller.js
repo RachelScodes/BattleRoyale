@@ -17,7 +17,7 @@ router.route('/')
       console.log('hit get /game');
       // get question from API
       unirest.get("https://pareshchouhan-trivia-v1.p.mashape.com/v1/getRandomQuestion")
-         .header("X-Mashape-Key", "lX0iJk5iGlmshE7fTOCtRf7hsj3Zp1NuuosjsnBKj4jIROPs9R")
+         .header("X-Mashape-Key", "TBD")
          .header("Accept", "application/json")
          .end(function (result) {
            console.log(result.body);
