@@ -32,4 +32,4 @@ userSchema.methods.authenticate = function(password, callback) {
 ////////////////////////////////////////////////////////////////////////////////
 
 
-module.exports = mongoose.model('User', userSchema);
+module.exports = mongoose.model('User', userSchema); ///// exports our user model
