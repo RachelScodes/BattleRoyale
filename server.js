@@ -1,5 +1,7 @@
 'use strict'
 ///// require express packages /////////////////////////////////////////////////
+
+
 let express = require('express');
 let app = express();
 let expressJWT = require('express-jwt');
@@ -7,9 +9,12 @@ let bodyParser = require('body-parser');
 let jwt = require('jsonwebtoken');
 let logger = require('morgan');
 let path = require('path');
-let io = require('socket.io');
 let config = require('./config'); ///// get our config file
 let user = require('./controllers/user_controller');
+let server = require('http').createServer(app);
+var io = require('socket.io')(server);
+
+app.set('port', 3000);
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -53,14 +58,46 @@ var parseTrivaApi = function(data, attr) {
   return newData;
 };
 
-
-
-
-
 ///// server ///////////////////////////////////////////////////////////////////
-let server = app.listen(3000, () => {
-  let host = server.address().address;
-  let port = server.address().port;
-  app.set('soSecret', config.secret);
-  console.log('server running!');
+// let server = app.listen(3000, () => {
+//   let host = server.address().address;
+//   let port = server.address().port;
+//   app.set('soSecret', config.secret);
+//   console.log('server running!');
+// });
+///// sockets yo ///////////////////////////////////////////////////////////////////////////
+var users = [];
+var addedUser = false;
+
+io.on('connection', function(client) {
+    console.log("User has connected");
+
+    client.on('add user', function(username) {
+        var userObj = {};
+        userObj.name = username;
+        userObj.id = client.id;
+        users.push(userObj);
+        addedUser = true;
+        io.emit('user joined', users);
+    });
+
+    client.on('send message', function(data) {
+        io.emit('send message', data);
+    });
+
+    client.on('disconnect', function() {
+        console.log("User has disconnected");
+        if(addedUser) {
+            users.forEach(function(user) {
+                if(user.id === client.id) {
+                    users.splice(users.indexOf(user), 1);
+                }
+            });
+        }
+        io.emit('user joined', users);
+    });
+});
+
+server.listen(app.get('port'), function() {
+    console.log("Node app is running at localhost:" + app.get('port'));
 });

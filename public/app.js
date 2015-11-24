@@ -1,6 +1,6 @@
 ///// control flow between rooms, render chat, etc /////////////////////////////
 
-var socket = io();
+var socket = io(); // listens and emits client-side - meat of socket in backend, just require in front end
 var myUser;
 
 $(function() {

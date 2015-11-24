@@ -11,7 +11,7 @@ let expressjwt = require('express-jwt');
 ///// the '/' means '/user, see server.js'
 
 ///// create (POST http://localhost:3000/user/create) ////////////////////////////////////////////////////////////////////////
-router.post('/signup', function(req, res) {
+router.post('/signup', function(req, res) { // call once hit submit
   console.log(req.body.user);
   let userObj = new User(req.body.user);
 
