@@ -3,4 +3,4 @@
 'use strict'
 
 let doc = document,
-let popup = $('<div>');
+    popup = $('<div>');
