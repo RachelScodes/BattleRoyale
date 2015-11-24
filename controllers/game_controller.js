@@ -17,14 +17,9 @@ let express  = require('express'),
 router.route('/')
    .get((req, res, next) =>{
       console.log('hit get /game');
-      // get question from API
-      unirest.get("https://pareshchouhan-trivia-v1.p.mashape.com/v1/getRandomQuestion")
-         .header("X-Mashape-Key", "TBD")
-         .header("Accept", "application/json")
-         .end(function (result) {
-           console.log(result.body);
-         //   res.send(result.body)
-         })
+      let categoryNum = 119 // "Coding & Decodin"
+      // send array of questions
+      res.send(getQuestions(categoryNum))
   })
    .post((req, res, next) => {
       // check user response
