@@ -8,7 +8,7 @@ let express  = require('express'),
     router   = express.Router(),
     mongoose = require('mongoose'),
     Question = require('../models/question.js'),
-    room     = [],
+    getQuestions = require('../routes/game.js'),
     unirest  = require('unirest'); //not needed
 ///// end requirements ////////////////////////////////////////////////////////
 
@@ -16,10 +16,12 @@ let express  = require('express'),
 // the '/' means '/game, see server.js'
 router.route('/')
    .get((req, res, next) =>{
-      console.log('hit get /game');
+      console.log('1. hit get /game');
       let categoryNum = 119 // "Coding & Decodin"
+      let questionArray = [];
+      getQuestions(categoryNum, questionArray)
       // send array of questions
-      res.send(getQuestions(categoryNum))
+      res.send(categoryNum + '\n' + questionArray )
   })
    .post((req, res, next) => {
       // check user response
