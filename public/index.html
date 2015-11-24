@@ -2,25 +2,65 @@
 <html>
    <head>
       <meta charset="utf-8">
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
       <title>Battle Royale</title>
       <link rel="stylesheet" href="style.css" charset="utf-8">
+      <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+      <!-- <script src="/socket.io/socket.io.js"></script> -->
       <script src="app.js"></script>
    </head>
    <body>
       <!-- container for whole ap -->
       <div class="container">
+         <!-- login/out -->
+         <div id="loginpage">
+            <!-- create user div -->
+            <div id="createuserpage">
+               <div class="createform">
+                  <input type="text" id="login-new" placeholder="Create new username">
+                  <input type="text" id="password-new" placeholder="Create new password">
+               </div>
+            </div>
+            <!-- login page div-->
+            <div id="loginpage">
+               <div class="loginform">
+                  <input type="text" id="login-input" placeholder="Enter your username">
+                  <input type="text" id="password-input" placeholder="Enter your password">
+               </div>
+            </div>
+            <!-- form send -->
+            <div id="form">
+               <input id="message" autocomplete="off" /><button>Send</button>
+            </form>
+            <div class="loginform">
+                <input type="text" id="login-input" placeholder="Enter your username and press enter">
+            </div>
+         </div>
 
          <!-- navigation -->
          <div id="top-nav">
             <!-- project who's in the room -->
-            <div id="user-list"></div>
+            <div id="users">
+               <ul id="usernames">
+
+               </ul>
+            </div>
+            <!-- Nav links -->
+            <div id="navigation">
+               <ul>
+                 <li class="createuser-link">Create New User</li>
+                 <li class="login-link">Login</li>
+               </ul>
+            </div>
             <!-- 1. logout, 2. return to lobby/quit game -->
             <button id="quit"> </button>
          </div>
 
          <!-- project live chat -->
-         <div id="chat-window"></div>
+         <div id="chat-window">
+            <ul id="messages">
+
+            </ul>
+         </div>
 
          <!-- app goes here -->
          <div id="app">
@@ -28,20 +68,23 @@
             <div id="lobby"></div>
             <!-- trivia game in room -->
             <div id="game">
-              <!-- click to get trivia questions -->
-              <div>
-                <button class="get-question">Get Question</button>
-              </div>
-              <!-- append question data here -->
-              <div class="selected-question">
-              </div>
+               <!-- click to get trivia questions -->
+               <button class="get-question">Get Question</button>
+               <!-- append question data here -->
+               <div class="selected-question">
+               </div>
             </div>
          </div>
 
          <!-- div to enter text -->
-         <div id="type-window"></div>
+         <div id="type-window">
+            <div id="form">
+               <input id="message" autocomplete="off" /><button>Send</button>
+            </form>
+         </div>
       </div>
       <script src="script.js"></script>
       <footer>Copyright 2015 by <a href="https://github.com/m428" target="_blank">Mala Nimalasuriya,</a> <a href="https://github.com/RachelScodes" target="_blank">Rachel Smyth,</a> <a href="https://github.com/sp180" target="_blank">Alex Wang</a>. View source on <a href="https://github.com/RachelScodes/BattleRoyale" target="_blank">Github</a></footer>
+
    </body>
 </html>
