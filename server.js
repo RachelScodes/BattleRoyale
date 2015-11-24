@@ -32,8 +32,8 @@ let homeRoutes = require('./controllers/home_controller' );
 app.use('/home', homeRoutes);
 
 // not needed because we'll be using ajax to make requests?
-// let gameRoutes = require('./controllers/game_controller' );
-// app.use('/game', gameRoutes);
+let gameRoutes = require('./controllers/game_controller' );
+app.use('/game', gameRoutes);
 
 
 
