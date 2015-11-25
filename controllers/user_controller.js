@@ -3,15 +3,17 @@
 let jwt = require('jsonwebtoken');
 let express = require('express');
 let User = require('../models/user');
-let secret = 'thissecretissofetch'; ///// Remember to pull out and place in our config.js file
+// let secret = 'thissecretissofetch'; ///// Remember to pull out and place in our config.js file
 let router = express.Router();
 let expressjwt = require('express-jwt');
-///// Do we need to require the database here too since we want to store users?
+let app = express();
+let config = require('../config');
+app.set('soSecret', config.secret); // set secret variable
 
 ///// the '/' means '/user, see server.js'
 
-///// create (POST http://localhost:3000/user/create) ////////////////////////////////////////////////////////////////////////
-router.post('/signup', function(req, res) { // call once hit submit
+///// create (POST http://localhost:3000/user/signup) ////////////////////////////////////////////////////////////////////////
+router.post('/signup', function(req, res) { // call once hit submit // test in postman
   console.log("signup route hit");
   console.log(req.body);
   let userObj = new User({
@@ -30,18 +32,16 @@ router.post('/signup', function(req, res) { // call once hit submit
 })
 ////////////////////////////////////////////////////////////////////////////////
 
-
-
-
-
+///// http://localhost:3000/user/authenticate //////////////////////////////////
 router.get('/authenticate', function(req, res){
   console.log('hit /authenticate');
+  res.send('/ hit /authenticate'); // test in postman
 });
 
 ///// authentication (POST http://localhost:3000/user/authenticate) ////////////
 ///// code below allows us to check our user and password and passes back a token
 ///// in a JSON response. Mongoose is used to find the user and jsonwebtoken to create the token ////
-router.post('/authenticate', function(req, res){ ///// POST not tested
+router.post('/authenticate', function(req, res){
   User.findOne({
     name: req.body.name
   }, function(err, user){
@@ -56,7 +56,7 @@ router.post('/authenticate', function(req, res){ ///// POST not tested
       } else {
         ///// if user is found and password correct
         let token = jwt.sign(user, app.get('soSecret'), {
-          expiresInMinutes: 525600 //// expires in 1 year - minutes in a year
+          expiresIn: 31557600 //// expires in 1 year - seconds in a year
         });
         ///// return the information including token as json
         res.send({
@@ -74,7 +74,8 @@ router.post('/authenticate', function(req, res){ ///// POST not tested
 ///// todo: route middelware to verify tokens
 
 
-///// show all users (GET http://localhost:3000/users) ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///// show all users (GET http://localhost:3000/user/users) ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///// this route also shows the entire user obj, inclusing encrypted passwords!
 router.get('/users', function(req, res){ ///// working - no users returns empty array as expected
   User.find({}, function(err, users){
     res.send(users);
