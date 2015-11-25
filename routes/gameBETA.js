@@ -14,7 +14,7 @@ let express  = require('express'),
 let getQuestions = function(catNum, array){
    console.log('2. inside getQuestions');
       // we want 10 good questions
-      for(var i = 0; i < 10; i++) {
+   for(var i = 0; i < 10; i++) {
       // chosen at random
       let pageNum = Math.ceil(Math.random()*30);
       // let's get them from the API
@@ -27,13 +27,15 @@ let getQuestions = function(catNum, array){
             // do we have too many?
             if (array.length < 10){
                // save the question after parsing as json
-               var question = new Question(JSON.parse(result.raw_body)[0]);
-               question.save(function(err) {
+               var jsQuestion = JSON.parse(result.raw_body)[0]
+               console.log("question is: ",jsQuestion);
+               var mongoQuestion = new Question(jsQuestion);
+               mongoQuestion.save(function(err) {
                   if (err) {
                      // bad question
                   } else {
                      // save to array
-                     array.push(question);
+                     array.push(jsQuestion);
                   }
                })
             }
@@ -42,9 +44,11 @@ let getQuestions = function(catNum, array){
    }
 
    // when we have enough questions, send them to game.
-   console.log(array);
+   console.log('is this array blank?',array);
    return array
 }
+
+
 
 let getUrl = function(cNum,pNum){
    console.log('4. page num: '+ pNum);

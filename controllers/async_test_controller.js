@@ -8,21 +8,23 @@ let express  = require('express'),
     router   = express.Router(),
     mongoose = require('mongoose'),
     Question = require('../models/question.js'),
-    getQuestions = require('../routes/game.js'),
+    getQuestion = require('../routes/testMe.js'),
+    async = require('async');
     unirest  = require('unirest'); //not needed
 ///// end requirements ////////////////////////////////////////////////////////
 
+
+let categoryNum = 119; // "Coding & Decodin"
 
 // the '/' means '/game, see server.js'
 router.route('/')
    .get((req, res, next) =>{
       console.log('1. hit get /game');
-      let categoryNum = 119 // "Coding & Decodin"
-      let blankArray = [];
-      let questionArray = getQuestions(categoryNum, blankArray);
-      // send array of questions
+      // let questions = getTen(categoryNum, 30)
+      let question = getQuestion(categoryNum, 30)
+
       console.log('sending to page');
-      res.send(questionArray )
+      res.send(categoryNum + question)
   })
    .post((req, res, next) => {
       // check user response
@@ -30,6 +32,19 @@ router.route('/')
       // show score for user
 
    });
+
+let getTen = function(num,int){
+   let blankArray = [];
+   let questionArray = [];
+      while (questionArray.length < 10){
+         let q = getQuestion(num, int)
+         if (q != 'nope') {
+            questionArray.push();
+         }
+      }
+   return questionArray
+}
+
 
 // router is the function being exported.
 module.exports = router;
