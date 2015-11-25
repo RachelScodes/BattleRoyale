@@ -4,5 +4,5 @@
 
 module.exports = {
   'secret': 'thissecretissofetch',
-  'database': 'mongodb://localhost/battle-royale'
+  'database': process.env.MONGOLAB_URI || 'mongodb://localhost/battle-royale'
 };

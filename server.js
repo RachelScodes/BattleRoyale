@@ -39,8 +39,8 @@ let homeRoutes = require('./controllers/home_controller' );
 app.use('/home', homeRoutes);
 
 // not needed because we'll be using ajax to make requests?
-let gameRoutes = require('./controllers/game_controller' );
-app.use('/game', gameRoutes);
+// let gameRoutes = require('./controllers/game_controller' );
+// app.use('/game', gameRoutes);
 
 let userRoutes = require('./controllers/user_controller');
 app.use('/user', user);
@@ -91,12 +91,4 @@ io.on('connection', function(client) {
     });
 });
 
-///// server ///////////////////////////////////////////////////////////////////
-// let server = app.listen(3000, () => {
-//   let host = server.address().address;
-//   let port = server.address().port;
-//   app.set('soSecret', config.secret);
-//   console.log('server running!');
-// });
-// app.listen()
 app.listen(process.env.PORT || 5000);
