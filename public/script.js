@@ -12,4 +12,4 @@ $('.get-question').click(function(event){
       $(list).append('<li>' + data[i] + '</li>');
     };
   });
-});
+}); 

@@ -9,6 +9,7 @@ let router = express.Router();
 router.route('/')
   .get((req, res, next) => {
      //landing page
+     res.send('hit get /home')
      console.log('hit get /home');
   })
   .post((req, res, next) => {
