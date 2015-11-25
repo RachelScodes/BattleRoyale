@@ -12,7 +12,7 @@ let path = require('path');
 let config = require('./config'); ///// get our config file
 let user = require('./controllers/user_controller');
 let server = require('http').createServer(app);
-var io = require('socket.io')(server);
+var io = require('socket.io').listen(server);
 
 app.set('port', 3000);
 

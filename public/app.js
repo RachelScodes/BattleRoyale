@@ -1,4 +1,5 @@
 ///// control flow between rooms, render chat, etc /////////////////////////////
+'use strict'
 console.log('script loaded');
 let socket = io(), // listens and emits client-side - meat of socket in backend, just require in front end
     doc    = document;
