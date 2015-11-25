@@ -1,6 +1,6 @@
 ///// control flow between rooms, render chat, etc /////////////////////////////
 
-var socket = io();
+var socket = io(); // listens and emits client-side - meat of socket in backend, just require in front end
 var myUser;
 
 
@@ -22,6 +22,14 @@ $(function() {
 		$('#navigation').hide();
 		$('#createuserpage').show();
 	});
+
+  $('#create-user-button').click(function() {
+    $.ajax({
+      url: "/user/signup",
+      method: "POST",
+      dataType: "json"
+    }).done(console.log("hello")); //executes /controllers/user_controller.js create function
+  });
 
 	$('#login-input').keypress(function(event) {
 		//event.keyCode === 13 refers to the Enter or Return key
@@ -83,4 +91,3 @@ socket.on('send message', function(data) {
 	message.text(data.name + " : " + data.message);
 	chatList.append(message);
 });
->>>>>>> 581cb58d19d5ecf2ecc1e4035d6ebd1a267979a9
