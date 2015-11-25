@@ -3,7 +3,7 @@
 let jwt = require('jsonwebtoken');
 let express = require('express');
 let User = require('../models/user');
-let secret = 'thissecretissofetch' ///// Remember to pull out and place in our config.js file
+let secret = 'thissecretissofetch'; ///// Remember to pull out and place in our config.js file
 let router = express.Router();
 let expressjwt = require('express-jwt');
 ///// Do we need to require the database here too since we want to store users?
@@ -28,7 +28,7 @@ router.post('/signup', function(req, res) { // call once hit submit
     }
   });
 })
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
 
 
@@ -38,8 +38,9 @@ router.get('/authenticate', function(req, res){
   console.log('hit /authenticate');
 });
 
-///// authentication (POST http://localhost:3000/user/authenticate) //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-///// code below allows us to check our user and password and passes back a token in a JSON response. Mongoose is used to find the user and jsonwebtoken to create the token ////
+///// authentication (POST http://localhost:3000/user/authenticate) ////////////
+///// code below allows us to check our user and password and passes back a token
+///// in a JSON response. Mongoose is used to find the user and jsonwebtoken to create the token ////
 router.post('/authenticate', function(req, res){ ///// POST not tested
   User.findOne({
     name: req.body.name

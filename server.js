@@ -23,7 +23,7 @@ app.use('/', express.static(__dirname + '/public'));
 
 ///// connect database /////////////////////////////////////////////////////////
 let mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/battle-royale'); ///// can refactor later and pull into config file
+mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/battle-royale'); ///// can refactor later and pull into config file
 let db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', (callback) => {
@@ -58,13 +58,6 @@ var parseTrivaApi = function(data, attr) {
   return newData;
 };
 
-///// server ///////////////////////////////////////////////////////////////////
-// let server = app.listen(3000, () => {
-//   let host = server.address().address;
-//   let port = server.address().port;
-//   app.set('soSecret', config.secret);
-//   console.log('server running!');
-// });
 ///// sockets yo ///////////////////////////////////////////////////////////////////////////
 var users = [];
 var addedUser = false;
@@ -98,6 +91,6 @@ io.on('connection', function(client) {
     });
 });
 
-server.listen(app.get('port'), function() {
-    console.log("Node app is running at localhost:" + app.get('port'));
+app.listen(process.env.PORT || 3000, function(){
+  console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
 });
