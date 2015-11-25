@@ -19,13 +19,32 @@ $(function() {
 		$('#createuserpage').show();
 	});
 
+///////////////////////////////////////////////////////////////////////////////////////////////
   $('#create-user-button').click(function() {
+	 var username = $('#login-new').val();
+ 	 var email = $('#email-new').val();
+ 	 var password = $('#password-new').val();
+ 	 var newUserData = {
+ 		 username: username,
+ 		 email: email,
+ 		 password: password
+ 	 }
     $.ajax({
       url: "/user/signup",
       method: "POST",
-      dataType: "json"
-    }).done(console.log("hello")); //executes /controllers/user_controller.js create function
+      data: newUserData
+    }).done($('#createuserpage').hide()); //executes /controllers/user_controller.js create function
   });
+ // var createUser = function() {
+ // 	newUserData.save
+ // }
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
 
 	$('#login-input').keypress(function(event) {
 		//event.keyCode === 13 refers to the Enter or Return key

@@ -13,7 +13,7 @@ let expressjwt = require('express-jwt');
 ///// create (POST http://localhost:3000/user/create) ////////////////////////////////////////////////////////////////////////
 router.post('/signup', function(req, res) { // call once hit submit
   console.log("signup route hit");
-  console.log(req.body.user);
+  console.log(req.body);
   let userObj = new User({
     username: req.body.username,
     email: req.body.email,

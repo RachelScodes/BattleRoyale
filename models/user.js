@@ -13,7 +13,7 @@ let userSchema = new mongoose.Schema({
 ////////////////////////////////////////////////////////////////////////////////
 userSchema.pre('save', function(next) {
   let currentUser = this;
-  if (!user.isModified('password')) return next(); ///// if password new/modified hash password
+  if (!currentUser.isModified('password')) return next(); ///// if password new/modified hash password
   bcrypt.genSalt(5, (err, salt) => { ///// generate salt
     if (err) return next(err);
     bcrypt.hash(currentUser.password, salt, (err, hash) => { ///// salt password
