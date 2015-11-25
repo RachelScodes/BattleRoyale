@@ -19,6 +19,14 @@ $(function() {
 		$('#createuserpage').show();
 	});
 
+  $('#create-user-button').click(function() {
+    $.ajax({
+      url: "/user/signup",
+      method: "POST",
+      dataType: "json"
+    }).done(console.log("hello")); //executes /controllers/user_controller.js create function
+  });
+
 	$('#login-input').keypress(function(event) {
 		//event.keyCode === 13 refers to the Enter or Return key
 		if(event.keyCode === 13) {
