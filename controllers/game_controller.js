@@ -35,5 +35,28 @@ router.route('/:room/:turn')
       console.log('this calculates the users\' scores and shows all scores');
    });
 
+// take room on or offline
+// router.route('/change/:room/:in_play')
+//    .post((req,res,next) => {
+//       let playState = req.params.in_play
+//       if (playState == 'true'){
+//          console.log('save the room status so people don\'t join midstream');
+//          takeRoomOff(req.params.room,true)
+//       } else {
+//          console.log('game is over. put room back in play.');
+//          takeRoomOff(req.params.room,false)
+//       }
+//       console.log('room status changed');
+//    })
+
+// // pseudo-code
+// function takeRoomOff(roomName,in_play) {
+//    let thisRoom = Room.find({'title'})
+//    thisRoom.in_play = in_play
+//    thisRoom.update.
+// }
+
+
+
 // router is the function being exported.
 module.exports = router;

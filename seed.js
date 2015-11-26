@@ -2,7 +2,7 @@
 // global variable
 let rooms = [];
 
-let Room   = require('./models/room.js'),
+let   Room = require('./models/room.js'),
   Category = require('./models/category.js'),
   mongoose = require('mongoose');
 
@@ -26,7 +26,7 @@ lobby.save(function(err) {
 
 
 // seeding info
-let roomTitles = [
+let roomNames = [
    "History", "Math", "Science", "Computers and Coding", "Language and Logic", "Sports", "Business and Finance", "Movies"
 ];
 let images = [
@@ -171,14 +171,17 @@ let categories = [
       {'api_id': 57, 'title':'Movies', 'max_qs':70}
    ]
 ]
-
+let ninjas = [
+   // 8 ninja pics for each room
+]
 // make them!
 let r = 0;
-while (r < roomTitles.length){
+while (r < roomNames.length){
    let newRoom = new Room({
-     title: roomTitles[r],
+     name: roomNames[r],
      img_url: images[r],
-     description: descriptions[r],
+     desc: descriptions[r],
+     ninjas: ninjas[r],
      categories: []
    });
 
@@ -186,7 +189,7 @@ while (r < roomTitles.length){
      if (err) {
        console.log(err)
      } else {
-         let cats = []; let c = 0;
+         let c = 0;
          while (c < categories[r].length) {
             let newCat = new Category({
                api_id: categories[c]['api_id']
@@ -205,6 +208,6 @@ while (r < roomTitles.length){
       }); // end else
    }
    // end room save, push to global var
-   rooms.push[newRoom._id]
+   rooms.push(newRoom._id)
    r++;
 } // end room maker
