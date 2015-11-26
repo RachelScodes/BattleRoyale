@@ -7,13 +7,14 @@ let express  = require('express'),
     request  = require('request'),
     router   = express.Router(),
     mongoose = require('mongoose'),
-    Room = require('../models/room.js'),
+    Room     = require('../models/room.js'),
     Question = require('../models/question.js'),
-    unirest  = require('unirest'); //not needed?
+    Category = require('../models/category.js'),
+    unirest  = require('unirest');
 ///// require all the things because yolo //////////////////////////////////////
 
 // variables
-let room     = {};
+let room     = undefined;
 let numsSelected = [];
 
 
@@ -29,25 +30,20 @@ router.get('/categoryPull/:roomNum', (req, res) => {
    let questionsArray = [];
 
    // choose 10 category numbers from list in room
-   let catList = room.api_categories
+   let catList = room.categories
    let categories = [];
 
    // iterator
    let i = 0;
 
    while(i < 10) {
-      let catNum = catList[getRandom(catList.length)]['text'];
-      console.log(whatWeWant)
-      termsArray.push(whatWeWant);
-
       i += 1;
    }
 
    // random page number for that category search
    let randoNum = getRandom();
 
-    res.send(termsArray);
-  });
+   res.send(questionsArray);
 });
 
 // get question from API
