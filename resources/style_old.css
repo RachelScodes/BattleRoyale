@@ -1,12 +1,12 @@
-body {
+/*body {
    background-color: grey;
    width: 100%;
    height: 100%;
    margin: 0;
    overflow: hidden;
-}
+}*/
 
-#top-nav {
+/*#top-nav {
     width: 74.5%;
     height: 50px;
     border: 2px solid white;
@@ -38,9 +38,9 @@ body {
    float: left;
    bottom: 15px;
    position: absolute;
-}
+}*/
 
-footer {
+/*footer {
    text-align: center;
    float: left;
    width: 100%;
@@ -51,4 +51,4 @@ footer {
    background-color: black;
    color: white;
    height: 20px;
-}
+}*/
