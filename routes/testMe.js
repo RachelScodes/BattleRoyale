@@ -51,18 +51,7 @@ let getUrl = function(catID,rNum){
 }
 
 
-let getRandom = function(max){
-   let pages = [];
-   let test = true;
-   while (test){
-      let randoNum = Math.floor(Math.random() * max) + 1;
-      if (pages.indexOf(randoNum) == -1) {
-         pages.push(randoNum);
-         test = false
-         return randoNum;
-      }
-   }
-}
+
 
 
 module.exports = getQuestion;

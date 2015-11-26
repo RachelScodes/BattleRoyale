@@ -1,14 +1,54 @@
+// all the api calls happen here
+// Generate an array of 10 random question/answer objects
+
 'use strict';
 
 let express  = require('express'),
     request  = require('request'),
     router   = express.Router(),
     mongoose = require('mongoose'),
+    Room = require('../models/room.js'),
     Question = require('../models/question.js'),
-    room     = [],
-    unirest  = require('unirest'); //not needed
+    unirest  = require('unirest'); //not needed?
 ///// require all the things because yolo //////////////////////////////////////
 
+// variables
+let room     = {};
+let numsSelected = [];
+
+
+// get room from our database using roomNum
+// catNum is category number, from room
+// catMax is max questions (for random), from room.
+// randoNum ensures questions are random and unique
+router.get('/categoryPull/:roomNum', (req, res) => {
+   // find the room in our db that matches the current room
+   room = Room.find({ 'div_id' : req.params.roomNum });
+   numsSelected = [];
+   // we need 10 questions in here
+   let questionsArray = [];
+
+   // choose 10 category numbers from list in room
+   let catList = room.api_categories
+   let categories = [];
+
+   // iterator
+   let i = 0;
+
+   while(i < 10) {
+      let catNum = catList[getRandom(catList.length)]['text'];
+      console.log(whatWeWant)
+      termsArray.push(whatWeWant);
+
+      i += 1;
+   }
+
+   // random page number for that category search
+   let randoNum = getRandom();
+
+    res.send(termsArray);
+  });
+});
 
 // get question from API
 let getQuestions = function(catNum, array){
@@ -50,6 +90,19 @@ let getUrl = function(cNum,pNum){
    console.log('4. page num: '+ pNum);
    let base = "https://pareshchouhan-trivia-v1.p.mashape.com/v1/getQuizQuestionsByCategory?categoryId=";
    return base + cNum + "&limit=1&page=" + pNum;
+}
+
+
+let getRandom = function(max){
+   let test = true;
+   while (test){
+      let randoNum = Math.floor(Math.random() * max) + 1;
+      if (numsSelected.indexOf(randoNum) == -1) {
+         numsSelected.push(randoNum);
+         test = false
+         return randoNum;
+      }
+   }
 }
 
 

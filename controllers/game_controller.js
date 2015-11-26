@@ -1,15 +1,11 @@
 // api link
-// https://pareshchouhan-trivia-v1.p.mashape.com/v1/getRandomQuestion
 
 'use strict';
 
 let express  = require('express'),
     request  = require('request'),
     router   = express.Router(),
-    mongoose = require('mongoose'),
-    Question = require('../models/question.js'),
     getQuestions = require('../routes/game.js'),
-    unirest  = require('unirest'); //not needed
 ///// end requirements ////////////////////////////////////////////////////////
 
 
@@ -17,18 +13,12 @@ let express  = require('express'),
 router.route('/')
    .get((req, res, next) =>{
       console.log('1. hit get /game');
-      let categoryNum = 119 // "Coding & Decodin"
-      let blankArray = [];
-      let questionArray = getQuestions(categoryNum, blankArray);
-      // send array of questions
-      console.log('sending to page');
-      res.send(questionArray )
+      res.send('got' )
   })
    .post((req, res, next) => {
       // check user response
       console.log('hit post /game, register response')
       // show score for user
-
    });
 
 // router is the function being exported.
