@@ -1,96 +1,83 @@
+// all the api calls happen here
+// Generate an array of 10 random question/answer objects
+
 'use strict';
 
 let express  = require('express'),
     request  = require('request'),
     router   = express.Router(),
     mongoose = require('mongoose'),
+    Room     = require('../models/room.js'),
     Question = require('../models/question.js'),
-    room     = [],
-    unirest  = require('unirest'); //not needed
+    Category = require('../models/category.js'),
+    unirest  = require('unirest');
 ///// require all the things because yolo //////////////////////////////////////
 
+// variables
+let room     = undefined;
+let numsSelected = [];
 
-   // get question from API
+
+// get room from our database using roomNum
+// catNum is category number, from room
+// catMax is max questions (for random), from room.
+// randoNum ensures questions are random and unique
+router.get('/categoryPull/:roomNum', (req, res) => {
+   // find the room in our db that matches the current room
+   room = Room.find({ 'div_id' : req.params.roomNum });
+   numsSelected = [];
+   // we need 10 questions in here
+   let questionsArray = [];
+
+   // choose 10 category numbers from list in room
+   let catList = room.categories
+   let categories = [];
+
+   // iterator
+   let i = 0;
+
+   while(i < 10) {
+      i += 1;
+   }
+
+   // random page number for that category search
+   let randoNum = getRandom();
+
+   res.send(questionsArray);
+});
+
+// get question from API
 let getQuestions = function(catNum, array){
    console.log('2. inside getQuestions');
-   let i = array.length
-   // run this until we have enough good questions
-   while (i < 10){
-      (function(){
-         let waw = i
-         setTimeout(function(){
-            console.log(i);
-            console.log(prompt);
-            console.log('2.5 inside setTimeout1');
-         }, 1000 * array.length);
-      })()
-      console.log('3. inside while loop');
+      // we want 10 good questions
+      for(var i = 0; i < 10; i++) {
+      // chosen at random
       let pageNum = Math.ceil(Math.random()*30);
+      // let's get them from the API
       unirest.get(getUrl(catNum,pageNum))
       .header("X-Mashape-Key", "lX0iJk5iGlmshE7fTOCtRf7hsj3Zp1NuuosjsnBKj4jIROPs9R")
       .header("Accept", "application/json")
       .end(function(result){
-         (function(){
-               if (result.body.length >= 1) {
-                  console.log('5. result status: ' + result.status);
-                  var prompt = '6. we have: ' + array.length + ' questions'
-                  setTimeout(function(){
-                     console.log(prompt);
-                     console.log('7. inside setTimeout');
-                     if (array.length < 10){
-                        console.log('8. inside IF tenQ.length');
-                        var question = new Question(result.body[0]);
-                        question.save(function(err) {
-                           console.log('9. inside question.save');
-                           if (err) {
-                              // if bad question, don't save
-                              console.log('10. error');
-                           } else {
-                              // if it's good, save it to array
-                              console.log('10. question:');
-                              console.log(question);
-                              array.push(question)
-                           }
-                        })
-                     }
-                  }, 1000 * array.length);
-               }
-            })
-         ()
-      })
-   }
-   // when we have enough questions, send them to game.
-   console.log(array);
-   return array
-}
-
-// end function (){
-   // set variable that is data
-   // if it works, go up, if not, don't go up.
-   // use set timeout
-   // for(var i = 0)
-// }
-
-
-// save valid api question to our database
-let saveQuestions = function(num,object, array){
-   console.log('6. num is: ' + num + 'array is: ');
-   console.log(array);
-   console.log('7 aka LAST. result retrieved!');
-   console.log(object.body[0]);
-   if (array.length < 10){
-      var question = new Question(object.body[0]);
-      question.save(function(err) {
-         if (err) {
-            // if bad question, don't save
-            console.log('noooope');
-         } else {
-            // if it's good, save it to array
-            console.log(question);
-            array.push(question)
+         // did we get a question?
+         if (result.body.length >= 1) {
+            // do we have too many?
+            if (array.length < 10){
+               // save the question after parsing as json
+               var question = new Question(JSON.parse(result.raw_body)[0]);
+               question.save(function(err) {
+                  if (err) {
+                     // bad question
+                  } else {
+                     // save to array
+                     array.push(question);
+                  }
+               })
+            }
          }
       })
    }
+
+   // when we have enough questions, send them to game.
    console.log(array);
    return array
 }
@@ -99,6 +86,19 @@ let getUrl = function(cNum,pNum){
    console.log('4. page num: '+ pNum);
    let base = "https://pareshchouhan-trivia-v1.p.mashape.com/v1/getQuizQuestionsByCategory?categoryId=";
    return base + cNum + "&limit=1&page=" + pNum;
+}
+
+
+let getRandom = function(max){
+   let test = true;
+   while (test){
+      let randoNum = Math.floor(Math.random() * max) + 1;
+      if (numsSelected.indexOf(randoNum) == -1) {
+         numsSelected.push(randoNum);
+         test = false
+         return randoNum;
+      }
+   }
 }
 
 
