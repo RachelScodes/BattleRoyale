@@ -3,7 +3,7 @@
 let rooms = [];
 
 let   Room = require('./models/room.js'),
-  Category = require('./models/category.js'),
+  // Category = require('./models/category.js'),
   mongoose = require('mongoose');
 
 //Connect to mongodb
@@ -16,18 +16,28 @@ db.once('open', (callback) => {
 });
 
 
-let seedAll = function() {
-   // make the Lobby!
+let seedAll = function(){
+   makeLobby();
+   seedRooms();
+
+   console.log('done with seedAll');
+}
+
+
+// make the Lobby!
+let makeLobby = function(){
    let lobby = new Room({
-     title: 'Lobby',
+     name: 'Lobby',
      // players: allUsers // global array of all players not in another room
    });
 
    lobby.save(function(err) {
-     rooms.push[lobby._id]
+     rooms.push(lobby._id)
    });
+}
 
-
+// make all the other rooms
+let seedRooms = function() {
    // seeding info
    let roomNames = [
       "History", "Math", "Science", "Computers and Coding", "Language and Logic", "Sports", "Business and Finance", "Movies"
@@ -178,48 +188,130 @@ let seedAll = function() {
    let ninjas = [
       // 8 ninja pics for each room
    ]
-   // make them!
-   let r = 0;
 
-   console.log('starting to save');
-   while (r < roomNames.length-1){
-      console.log('room iterator: ',r);
-      let newRoom = new Room({
-        name: roomNames[r],
-        img_url: images[r],
-        desc: descriptions[r],
-        ninjas: ninjas[r],
-        categories: []
-      });
-      newRoom.save(function(err) {
-         console.log('saving room : ',roomNames[r]);
-         if (err) {
-            console.log('not saved');
-            console.log(err)
-         } else {
-            let c = 0;
-            while (c < catties[r].length-1) {
-               console.log('category iterator: ',c);
-               let newCat = new Category({
-                  api_id: catties[r][c]['api_id'],
-                  title: catties[r][c]['title'],
-                  max_qs: catties[r][c]['max_qs']
-               });
-               newCat.save(function(err) {
-                  console.log('saving category: ',catties[r][c]['title']);
-                  if (err) {
-                     console.log(err)
-                  } else {
-                     console.log('this will be pushed into cat array of room: ',roomNames[r]);
-                     console.log(newCat._id);
-                     newRoom.categories.push(newCat._id);
-                  }
-               });
-               c++;
-            } // end category maker
-         } // end else
-      })// end room save, push to global var
-      rooms.push(newRoom._id)
-      r++;
-   } // end room maker
-}
+   // make them!
+   console.log('Starting to save');
+   let history = new Room({
+      name: roomNames[0],
+      img_url: images[0],
+      desc: descriptions[0],
+      ninjas: ninjas[0],
+      categories: [0]
+   })
+   history.save(function(err) {
+      console.log('saving room : ',roomNames[0]);
+      if (err) {
+         console.log('not saved');
+         console.log(err)
+      } else {
+         history.push(newRoom._id)
+         let math = new Room({
+            name: roomNames[1],
+            img_url: images[1],
+            desc: descriptions[1],
+            ninjas: ninjas[1],
+            categories: [1]
+         })
+         math.save(function(err) {
+               console.log('saving room : ',roomNames[1]);
+               if (err) {
+                  console.log('not saved');
+                  console.log(err)
+               } else {
+                  math.push(newRoom._id)
+                  let science = new Room({
+                     name: roomNames[2],
+                     img_url: images[2],
+                     desc: descriptions[2],
+                     ninjas: ninjas[2],
+                     categories: [2]
+                  })
+                  science.save(function(err) {
+                        console.log('saving room : ',roomNames[2]);
+                        if (err) {
+                           console.log('not saved');
+                           console.log(err)
+                        } else {
+                           science.push(newRoom._id)
+                           let compSci = new Room({
+                              name: roomNames[3],
+                              img_url: images[3],
+                              desc: descriptions[3],
+                              ninjas: ninjas[3],
+                              categories: [3]
+                           })
+                           compSci.save(function(err) {
+                                 console.log('saving room : ',roomNames[3]);
+                                 if (err) {
+                                    console.log('not saved');
+                                    console.log(err)
+                                 } else {
+                                    compSci.push(newRoom._id)
+                                    let langLog = new Room({
+                                       name: roomNames[4],
+                                       img_url: images[4],
+                                       desc: descriptions[4],
+                                       ninjas: ninjas[4],
+                                       categories: [4]
+                                    })
+                                    langLog.save(function(err) {
+                                          console.log('saving room : ',roomNames[4]);
+                                          if (err) {
+                                             console.log('not saved');
+                                             console.log(err)
+                                          } else {
+                                             langLog.push(newRoom._id)
+                                             let sportS = new Room({
+                                                name: roomNames[5],
+                                                img_url: images[5],
+                                                desc: descriptions[5],
+                                                ninjas: ninjas[5],
+                                                categories: [5]
+                                             })
+                                             sportS.save(function(err) {
+                                                   console.log('saving room : ',roomNames[5]);
+                                                   if (err) {
+                                                      console.log('not saved');
+                                                      console.log(err)
+                                                   } else {
+                                                      sportS.push(newRoom._id)
+                                                      let business = new Room({
+                                                         name: roomNames[6],
+                                                         img_url: images[6],
+                                                         desc: descriptions[6],
+                                                         ninjas: ninjas[6],
+                                                         categories: [6]
+                                                      })
+                                                      business.save(function(err) {
+                                                            console.log('saving room : ',roomNames[6]);
+                                                            if (err) {
+                                                               console.log('not saved');
+                                                               console.log(err)
+                                                            } else {
+                                                               business.push(newRoom._id)
+                                                               let movies = new Room({
+                                                                  name: roomNames[7],
+                                                                  img_url: images[7],
+                                                                  desc: descriptions[7],
+                                                                  ninjas: ninjas[7],
+                                                                  categories: [7]
+                                                               })
+                                                               movies.save(function(err) {
+                                                                     console.log('saving room : ',roomNames[7]);
+                                                                     if (err) {
+                                                                        console.log('not saved');
+                                                                        console.log(err)
+                                                                     } else {
+                                                                        movies.push(newRoom._id)
+                                                                        console.log('done!');
+                                                                     }}) // end movies
+                                                            }}) // end business
+                                                   }}) // end sports
+                                          }}) // end language and logic
+                                 }}) // end computers
+                        }}) // end science
+               }}) // end math
+      }}) // end history
+
+   console.log(rooms.length);
+}// end rooms save
