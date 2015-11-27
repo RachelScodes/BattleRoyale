@@ -6,38 +6,25 @@ let   Room = require('./models/room.js'),
   // Category = require('./models/category.js'),
   mongoose = require('mongoose');
 
-//Connect to mongodb
-mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/battle-royale'); ///// can refactor later and pull into config file
-let db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', (callback) => {
-  console.log('db connected!');
-  seedAll();
-});
-
-
-let seedAll = function(){
-   makeLobby();
-   seedRooms();
-
-   console.log('done with seedAll');
-}
-
-
 // make the Lobby!
 let makeLobby = function(){
    let lobby = new Room({
-     name: 'Lobby',
-     // players: allUsers // global array of all players not in another room
+      name: 'Lobby',
+      // players: allUsers // global array of all players not in another room
    });
 
    lobby.save(function(err) {
-     rooms.push(lobby._id)
+      if (err){
+         console.log(err);
+      } else {
+         console.log('saved lobby');
+         rooms.push(lobby)
+      }
    });
 }
 
 // make all the other rooms
-let seedRooms = function() {
+let makeRooms = function() {
    // seeding info
    let roomNames = [
       "History", "Math", "Science", "Computers and Coding", "Language and Logic", "Sports", "Business and Finance", "Movies"
@@ -184,7 +171,6 @@ let seedRooms = function() {
          {'api_id': 57, 'title':'Movies', 'max_qs':70}
       ]
    ]
-
    let ninjas = [
       // 8 ninja pics for each room
    ]
@@ -196,7 +182,7 @@ let seedRooms = function() {
       img_url: images[0],
       desc: descriptions[0],
       ninjas: ninjas[0],
-      categories: [0]
+      categories: catties[0]
    })
    history.save(function(err) {
       console.log('saving room : ',roomNames[0]);
@@ -204,13 +190,13 @@ let seedRooms = function() {
          console.log('not saved');
          console.log(err)
       } else {
-         history.push(newRoom._id)
+         rooms.push(history)
          let math = new Room({
             name: roomNames[1],
             img_url: images[1],
             desc: descriptions[1],
             ninjas: ninjas[1],
-            categories: [1]
+            categories: catties[1]
          })
          math.save(function(err) {
                console.log('saving room : ',roomNames[1]);
@@ -218,13 +204,13 @@ let seedRooms = function() {
                   console.log('not saved');
                   console.log(err)
                } else {
-                  math.push(newRoom._id)
+                  rooms.push(math)
                   let science = new Room({
                      name: roomNames[2],
                      img_url: images[2],
                      desc: descriptions[2],
                      ninjas: ninjas[2],
-                     categories: [2]
+                     categories: catties[2]
                   })
                   science.save(function(err) {
                         console.log('saving room : ',roomNames[2]);
@@ -232,13 +218,13 @@ let seedRooms = function() {
                            console.log('not saved');
                            console.log(err)
                         } else {
-                           science.push(newRoom._id)
+                           rooms.push(science)
                            let compSci = new Room({
                               name: roomNames[3],
                               img_url: images[3],
                               desc: descriptions[3],
                               ninjas: ninjas[3],
-                              categories: [3]
+                              categories: catties[3]
                            })
                            compSci.save(function(err) {
                                  console.log('saving room : ',roomNames[3]);
@@ -246,13 +232,13 @@ let seedRooms = function() {
                                     console.log('not saved');
                                     console.log(err)
                                  } else {
-                                    compSci.push(newRoom._id)
+                                    rooms.push(compSci)
                                     let langLog = new Room({
                                        name: roomNames[4],
                                        img_url: images[4],
                                        desc: descriptions[4],
                                        ninjas: ninjas[4],
-                                       categories: [4]
+                                       categories: catties[4]
                                     })
                                     langLog.save(function(err) {
                                           console.log('saving room : ',roomNames[4]);
@@ -260,13 +246,13 @@ let seedRooms = function() {
                                              console.log('not saved');
                                              console.log(err)
                                           } else {
-                                             langLog.push(newRoom._id)
+                                             rooms.push(langLog)
                                              let sportS = new Room({
                                                 name: roomNames[5],
                                                 img_url: images[5],
                                                 desc: descriptions[5],
                                                 ninjas: ninjas[5],
-                                                categories: [5]
+                                                categories: catties[5]
                                              })
                                              sportS.save(function(err) {
                                                    console.log('saving room : ',roomNames[5]);
@@ -274,13 +260,13 @@ let seedRooms = function() {
                                                       console.log('not saved');
                                                       console.log(err)
                                                    } else {
-                                                      sportS.push(newRoom._id)
+                                                      rooms.push(sportS)
                                                       let business = new Room({
                                                          name: roomNames[6],
                                                          img_url: images[6],
                                                          desc: descriptions[6],
                                                          ninjas: ninjas[6],
-                                                         categories: [6]
+                                                         categories: catties[6]
                                                       })
                                                       business.save(function(err) {
                                                             console.log('saving room : ',roomNames[6]);
@@ -288,13 +274,13 @@ let seedRooms = function() {
                                                                console.log('not saved');
                                                                console.log(err)
                                                             } else {
-                                                               business.push(newRoom._id)
+                                                               rooms.push(business)
                                                                let movies = new Room({
                                                                   name: roomNames[7],
                                                                   img_url: images[7],
                                                                   desc: descriptions[7],
                                                                   ninjas: ninjas[7],
-                                                                  categories: [7]
+                                                                  categories: catties[7]
                                                                })
                                                                movies.save(function(err) {
                                                                      console.log('saving room : ',roomNames[7]);
@@ -302,8 +288,10 @@ let seedRooms = function() {
                                                                         console.log('not saved');
                                                                         console.log(err)
                                                                      } else {
-                                                                        movies.push(newRoom._id)
+                                                                        rooms.push(movies)
                                                                         console.log('done!');
+                                                                        console.log('rooms array is ths long: ',rooms.length);
+                                                                        console.log(rooms);
                                                                      }}) // end movies
                                                             }}) // end business
                                                    }}) // end sports
@@ -312,6 +300,21 @@ let seedRooms = function() {
                         }}) // end science
                }}) // end math
       }}) // end history
+};// end makeRooms
 
-   console.log(rooms.length);
-}// end rooms save
+// seed them to db
+let seedAll = function(){
+   makeLobby();
+   console.log('makeLobby done in seedAll');
+   makeRooms();
+   console.log('done with seedAll');
+}
+
+//Connect to mongodb
+mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/battle-royale'); ///// can refactor later and pull into config file
+let db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', (callback) => {
+  console.log('db connected!');
+  seedAll();
+});
