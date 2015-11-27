@@ -10,7 +10,8 @@ let jwt = require('jsonwebtoken');
 let logger = require('morgan');
 let path = require('path');
 let config = require('./config'); ///// get our config file
-let user = require('./controllers/user_controller');
+// let user = require('./controllers/user_controller'); // MODIFIED
+let user = require('./routes/user_routes'); // MODIFIED
 let server = require('http').createServer(app);
 var io = require('socket.io').listen(server);
 
@@ -35,15 +36,17 @@ app.get('/', function(req, res){ // test route // delete later
   res.send('hit test route!');
 });
 
+///// require routes
 let homeRoutes = require('./controllers/home_controller' );
 app.use('/home', homeRoutes);
+// let userRoutes = require('./controllers/user_controller'); // MODIFIED
+let userRoutes = require('./routes/user_routes'); // MODIFIED
+app.use('/user', user);
 
 // not needed because we'll be using ajax to make requests?
 // let gameRoutes = require('./controllers/game_controller' );
 // app.use('/game', gameRoutes);
 
-let userRoutes = require('./controllers/user_controller');
-app.use('/user', user);
 
 
 

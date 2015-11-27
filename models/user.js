@@ -4,11 +4,20 @@ let bcrypt = require('bcrypt');
 
 let userSchema = new mongoose.Schema({
   fullname: {type: String},
-  username: {type: String, unique: true, required: true},
-  email: {type: String, required: true, unique: true},
-  password: {type: String, required: true},
-  player_since:{type: Date, default: Date.now}
+   username: {type: String, unique: true, required: true},
+   email: {type: String, required: true, unique: true},
+   password: {type: String, required: true},
+   player_since:{type: Date, default: Date.now}
 });
+
+///// update user model
+// username: {type: String, unique: true, required: true},
+// email: {type: String, required: true, unique: true},
+// password: {type: String, required: true},
+// player_since:{type: Date, default: Date.now},
+// wins: {type: Number},
+// score: {type: Number}
+
 
 ////////////////////////////////////////////////////////////////////////////////
 userSchema.pre('save', function(next) {
