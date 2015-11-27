@@ -1,7 +1,7 @@
 ///// control flow between rooms, render chat, etc /////////////////////////////
 'use strict'
 console.log('script loaded');
-let socket = io(), // listens and emits client-side - meat of socket in backend, just require in front end
+let socket = io(), ///// listens and emits client-side - meat of socket in backend, just require in front end
     doc    = document;
 
 $(function() {
@@ -14,17 +14,17 @@ $(function() {
 		$('#loginpage').show();
 	});
 
+
+///// create new user - POST http://localhost:3000/user/signup - user_controller.js ////////////////
 	$('.createuser-link').click(function() {
 		$('#navigation').hide();
 		$('#createuserpage').show();
 	});
 
-///////////////////////////////////////////////////////////////////////////////////////////////
-  $('#create-user-button').click(function() {
-	 var username = $('#login-new').val();
- 	 var email = $('#email-new').val();
- 	 var password = $('#password-new').val();
- 	 var newUserData = {
+	 let username = $('#login-new').val();
+ 	 let email = $('#email-new').val();
+ 	 let password = $('#password-new').val();
+ 	 let newUserData = {
  		 username: username,
  		 email: email,
  		 password: password
@@ -33,17 +33,30 @@ $(function() {
       url: "/user/signup",
       method: "POST",
       data: newUserData
-    }).done($('#createuserpage').hide()); //executes /controllers/user_controller.js create function
+    }).done(goToLogin); ///// executes /controllers/user_controller.js create function
   });
- // var createUser = function() {
- // 	newUserData.save
- // }
+
+  let goToLogin = function() {
+    $('#createuserpage').hide();
+    $('#loginpage').show();
+    // $('#submit-login').show(); ///// add login submit button to index.html
+  }
 ///////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-
-
+  // $('#submit-login-button').click(function() {
+  //   let user = $('#name').val();
+  //   let password = $('#password').val();
+  //   let user = {
+  //     fullname: fullname,
+  //     password: password
+  //   }
+  //   $.ajax({
+  //     url: "/user/authentication",
+  //     method: "POST",
+  //     data: userData
+  //   }).done( FUNCTION TO SHOW GAME LOBBY GOES HERE) ///// incomplete
+  // });
+  //
+  // let goToLobby = function() ///// incomplete
 
 
 	$('#login-input').keypress(function(event) {
@@ -57,7 +70,6 @@ $(function() {
 		}
 	});
 
-//create a mongoDB to persist created users--need a schema
 //use ajax calls to store users
 //store in a JSON object
 //use bcrypt to encrypt the password along the way
