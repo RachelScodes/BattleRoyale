@@ -3,11 +3,14 @@ let mongoose = require('mongoose');
 let bcrypt = require('bcrypt');
 
 let userSchema = new mongoose.Schema({
-  fullname: {type: String},
-  username: {type: String, unique: true, required: true},
-  email: {type: String, required: true, unique: true},
-  password: {type: String, required: true},
-  player_since:{type: Date, default: Date.now}
+   fullname: {type: String},
+   username: {type: String, unique: true, required: true},
+   email: {type: String, required: true, unique: true},
+   password: {type: String, required: true},
+   player_since:{type: Date, default: Date.now},
+   wins: {type: Number, default: 0},
+   score: {type: Number, default: 0},
+   high: {type: Number, default: 0}
 });
 
 ////////////////////////////////////////////////////////////////////////////////
