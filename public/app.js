@@ -1,36 +1,38 @@
 ///// control flow between rooms, render chat, etc /////////////////////////////
-'use strict'
+// 'use strict'
 console.log('script loaded');
-let socket = io(), ///// listens and emits client-side - meat of socket in backend, just require in front end
-    doc    = document;
+var socket = io(), ///// listens and emits client-side - meat of socket in backend, just require in front end
+    doc    = document,
+    myUser;
 
 $(function() {
-	//these two divs will be hidden at the start
+	//these divs will be hidden at the start
 	$('#loginpage').hide();
 	$('#createuserpage').hide();
+  $('#authenticate-page').hide(); 
 
 	$('.login-link').click(function() {
 		$('#navigation').hide();
-		$('#loginpage').show();
-	});
+		// $('#loginpage').show(); ///// commented out to render authenticate login and test
+    $('#authenticate-page').show(); ///// added to render authenticate login and test
+  });
 
 
-/// create new user - POST http://localhost:3000/user/signup - user_controller.js /////////////////////////////
-$('.createuser-link').click(function() {
+/// create new user - POST http://localhost:3000/user/signup ///////////////////
   $('#navigation').hide();
   $('#createuserpage').show();
 });
 
 $('#create-user-submit-button').click(function() {
- let username = $('#login-new').val();
- let email = $('#email-new').val();
- let password = $('#password-new').val();
- let newUserData = {
+ var username = $('#login-new').val();
+ var email = $('#email-new').val();
+ var password = $('#password-new').val();
+ var newUserData = {
    username: username,
    email: email,
    password: password
  }
-  $.ajax({  /////executes controllers/user_controller.js create function
+  $.ajax({  ///// executes user_controller.js create function
     url: "/user/signup",
     method: "POST",
     data: newUserData
@@ -38,79 +40,44 @@ $('#create-user-submit-button').click(function() {
 });
 
 
-  let goToLogin = function() {
+  var goToLogin = function() {
     $('#createuserpage').hide();
-    $('#loginpage').show();
+    $('#authenticate-page').show();
     $('#submit-login').show(); ///// add login submit button to index.html
   }
 
-//////// authenticate - POST http://localhost:3000/user/authenticate - user_controller.js ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  // $('#login-submit-button').click(function() {
-  //   let user = $('#name').val();
-  //   let password = $('#password').val();
-  //   let userLoginData = {
-  //     username: username,
-  //     password: password
-  //   }
-  //   $.ajax({
-  //     url: "/user/authenticate",
-  //     method: "POST",
-  //     data: userLoginData
-  //   }).done( console.log('logging in'))
-  // });
+//////// authenticate - POST http://localhost:3000/user/authenticate ////////////
+  $('#authenticate-submit-button').click(function() {
+    // console.log('clicked');
+    var username = $('#authenticate-username-input').val();
+    var password = $('#authenticate-password-input').val();
+    var userLoginData = {
+      username: username,
+      password: password
+    }
+    // console.log(userLoginData);
+    $.ajax({ ///// executes user_controller.js auth function
+      url: "/user/authenticate",
+      method: "POST",
+      data: userLoginData
+    }).done(goToLobby)
 
-  // let goToLobby = function() ///// incomplete
+    // console.log(username + 'this should be username');
+      myUser = username;
+      socket.emit('add user', username);
+      $('#authenticate-username-input').val('');
+    }); // end of authenticate submit button jQuery call
 
+    var goToLobby = function() {
+      $('#authenticate-page').hide();
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-///// sockets login - separate? ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	$('#login-input').keypress(function(event) {
-		//event.keyCode === 13 refers to the Enter or Return key
-		if(event.keyCode === 13) {
-			var username = $('#login-input').val();
-			myUser = username;
-			socket.emit('add user', username);
-			$('#login-input').val('');
-			$('#loginpage').hide();
-		}
-	});
-
-//use ajax calls to store users
-//store in a JSON object
-//use bcrypt to encrypt the password along the way
-
-	$('#login-new').keypress(function(event) {
-		//event.keyCode === 13 refers to the Enter or Return key
-		if(event.keyCode === 13) {
-			//creating a new user below, need to link to server.js and create new server.js functions
-			//.val() is the value of whatever is in field at the time of the keypress
-			var username = $('#login-new').val();
-			var password = $('#password-new').val();
-			// newUser = username;
-			// newPass = password;
-			// socket.emit('new user', username);
-			// socket.emit('new pass', password);
-			// $('#login-new').val('');
-			$('#createuserpage').hide();
-		}
-	});
 
 	$('#message').keypress(function(event) {
 		if(event.keyCode === 13) {
 			var message = $('#message').val();
+      console.log(myUser);
+
 			socket.emit('send message', {name: myUser, message: message});
 			$('#message').val('');
 		}

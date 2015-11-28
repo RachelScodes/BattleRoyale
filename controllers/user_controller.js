@@ -71,21 +71,19 @@ function editUser(req, res) {
 ///// delete user (DELETE http://localhost:3000/user/delete) //////////////////////////////////////////////////////////////////////////////////
 function deleteUser(req, res) {
   console.log('hit delete')
-  let userParams = req.body.user;
-  User.findOneAndRemove({ username: userParams.username}, function (err, user) {
+  let userParams = req.body.username;
+  User.findOne({ username: userParams.username}, function (err, user) {
     if (err) {
       console.log('user not deleted');
+      console.log(user);
       return;
-    } user.remove(function(err) {
-      res.send({"record" : 'deleted'});
+    } User.remove(function(err, user) {
+      res.send({"record" : "deleted"});
     });
   });
 }
 
 
-
-///// login (GET http://localhost:3000/user/login) ////////////////////////////////////////////////////////////////////////////////////////////
-// function login() - same as authenticate?
 
 ///// logout (GET http://localhost:3000/user/logout) //////////////////////////////////////////////////////////////////////////////////////////
 // function logout()
@@ -99,14 +97,16 @@ function deleteUser(req, res) {
 function auth(req, res) {
   User.findOne({
     // name: req.body.name
-      username: req.body.username
+      username: req.body.username ///// return correct user with all object info when inputted through form and postman
   }, function(err, user){
     if (err) throw err;
     console.log('yo yo yo')
-
+    console.log(user); ///// data shows up in Postman and properly renders if the username is correct - otherwise null
     if(!user) {
+      console.log(req.body.username);
       ///// check for user in database
-      res.send({ success: false, message: 'Authentication failed. User not found.' });
+      res.send({ success: false, message: 'Authentication failed. User not found.' }); ///// not working correctly with form (everyone gets authenticated right now despite their credentials) but working when tested with postman
+      console.log(res.body);
     } else if (user) {
       ///// check if password matches
       if (user.password != req.body.password) {
@@ -123,6 +123,8 @@ function auth(req, res) {
           token: token
         });
       }
+      console.log('Enjoy the token');
+      console.log(req.body);
     }
   });
 };
@@ -136,6 +138,5 @@ module.exports = {
   auth: auth,
   editUser: editUser,
   deleteUser: deleteUser,
-  // login: login,
   // logout: logout
 }
