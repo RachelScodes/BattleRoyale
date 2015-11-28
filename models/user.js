@@ -11,7 +11,7 @@ let userSchema = new mongoose.Schema({
    wins: {type: Number, default: 0},
    score: {type: Number, default: 0},
    high: {type: Number, default: 0}
-},{ capped: { size: 1024, max: 12 } });
+});
 
 ////////////////////////////////////////////////////////////////////////////////
 userSchema.pre('save', function(next) {

@@ -26,8 +26,8 @@ let timer = undefined, countdown = undefined, button = undefined;
       getScore();
 
       // set or restart timer
-      (turnCount == 10) ? endGame() : console.log('starting turn');
-      (turnCount > 1 && turnCount != 10) ? resetTimers() : setClickIn();
+      (turnCount < 10) ? resetTimers() : endGame();
+
       // pop bubbles
       return false;
    })
@@ -38,11 +38,11 @@ let clickButt = function(){
    console.log('click triggered from Interval')
 }
 
-let getScore = function(start){
+let getScore = function(){
    endRound = parseInt(Date.now());
 
    let diff = endRound - startRound;
-   console.log('time elapsed since start is: '+diff/1000+' seconds');
+   console.log('time elapsed since start is: '+(diff/1000)+' seconds');
    score += (diff > 7000) ? diff : 0;
 
    console.log('score is: ',score,' at end of turn: ',turnCount);
@@ -50,44 +50,43 @@ let getScore = function(start){
 }
 
 let resetTimers = function(){
-   // clear the timers
+   // clear the timer
    win.clearInterval(countdown);
-
-   // start them up again
-   setClickIn();
+   // start it up again
+   startRound = parseInt(Date.now()),
+   setTimer();
 }
 
 let countDown = function(){
-   if (ticks >= 0){
+   if (ticks > 0){
       let ticker = (ticks % 2 == 0) ? ' seconds...tick' : ' seconds...tock';
       console.log(ticks + ticker);
       ticks--
    } else {
-      console.log('BOOM! HEADSHOT!');
-      ticks = timerLength;
+      console.log('TIME\'S UP! TURN '+turnCount+' OVER!');
       timesUp()
    }
 }
 
 function timesUp(){
    // new round starting
-   startRound = parseInt(Date.now()),
-   console.log('started: ',startRound);
-
    clickButt()
 }
 
-function setClickIn(){
+function setTimer(){
    ticks = timerLength;
    // time is up in....
    countdown = win.setInterval(countDown,1000)
 }
 
 function endGame(){
+   win.clearInterval(countdown)
    console.log('GAME OVER!');
+   turnCount = 10;
+   button.detach();
 }
 
-setClickIn();
+setTimer();
 
 
 // 0. on lobby page? call start game using name of room as param
