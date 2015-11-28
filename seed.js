@@ -240,34 +240,3 @@ var data = [
         ]
     }
 ];
-
-
-Room.closeThisRoom('Movies',function(err, rm) {
-  if (err){
-    console.log(err);
-  }
-});
-
-Room.closeThisRoom('Math',function(err, rm) {
-  if (err){
-    console.log(err);
-  }
-});
-Room.closeThisRoom('History',function(err, rm) {
-  if (err){
-    console.log(err);
-  }
-});
-
-
-Room.isOpen(function(err, results) {
-   console.log('.isOpen(callback)');
-   let result = err
-   if (results) {
-      result = []
-      for (var i = 0; i < results.length; i++){
-         result.push(results[i]['name'])
-      }
-   }
-   console.log(result);
-});
