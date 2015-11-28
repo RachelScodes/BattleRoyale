@@ -9,7 +9,6 @@ let express  = require('express'),
     mongoose = require('mongoose'),
     Room     = require('../models/room.js'),
     Question = require('../models/question.js'),
-    Category = require('../models/category.js'),
     unirest  = require('unirest');
 ///// require all the things because yolo //////////////////////////////////////
 
