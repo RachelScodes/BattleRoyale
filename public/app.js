@@ -15,50 +15,68 @@ $(function() {
 	});
 
 
-///// create new user - POST http://localhost:3000/user/signup - user_controller.js ////////////////
-	$('.createuser-link').click(function() {
-		$('#navigation').hide();
-		$('#createuserpage').show();
-	});
+/// create new user - POST http://localhost:3000/user/signup - user_controller.js /////////////////////////////
+$('.createuser-link').click(function() {
+  $('#navigation').hide();
+  $('#createuserpage').show();
+});
 
-	 let username = $('#login-new').val();
- 	 let email = $('#email-new').val();
- 	 let password = $('#password-new').val();
- 	 let newUserData = {
- 		 username: username,
- 		 email: email,
- 		 password: password
- 	 }
-    $.ajax({
-      url: "/user/signup",
-      method: "POST",
-      data: newUserData
-    }).done(goToLogin); ///// executes /controllers/user_controller.js create function
-  });
+$('#create-user-submit-button').click(function() {
+ let username = $('#login-new').val();
+ let email = $('#email-new').val();
+ let password = $('#password-new').val();
+ let newUserData = {
+   username: username,
+   email: email,
+   password: password
+ }
+  $.ajax({  /////executes controllers/user_controller.js create function
+    url: "/user/signup",
+    method: "POST",
+    data: newUserData
+  }).done(goToLogin); //// show login page
+});
+
 
   let goToLogin = function() {
     $('#createuserpage').hide();
     $('#loginpage').show();
-    // $('#submit-login').show(); ///// add login submit button to index.html
+    $('#submit-login').show(); ///// add login submit button to index.html
   }
-///////////////////////////////////////////////////////////////////////////////////////////////
-  // $('#submit-login-button').click(function() {
+
+//////// authenticate - POST http://localhost:3000/user/authenticate - user_controller.js ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  // $('#login-submit-button').click(function() {
   //   let user = $('#name').val();
   //   let password = $('#password').val();
-  //   let user = {
-  //     fullname: fullname,
+  //   let userLoginData = {
+  //     username: username,
   //     password: password
   //   }
   //   $.ajax({
-  //     url: "/user/authentication",
+  //     url: "/user/authenticate",
   //     method: "POST",
-  //     data: userData
-  //   }).done( FUNCTION TO SHOW GAME LOBBY GOES HERE) ///// incomplete
+  //     data: userLoginData
+  //   }).done( console.log('logging in'))
   // });
-  //
+
   // let goToLobby = function() ///// incomplete
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+///// sockets login - separate? ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	$('#login-input').keypress(function(event) {
 		//event.keyCode === 13 refers to the Enter or Return key
 		if(event.keyCode === 13) {
@@ -98,7 +116,6 @@ $(function() {
 		}
 	});
 
-});
 
 // SOCKET EVENTS
 
@@ -118,3 +135,4 @@ socket.on('send message', function(data) {
 	message.text(data.name + " : " + data.message);
 	chatList.append(message);
 });
+})
