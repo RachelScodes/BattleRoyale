@@ -4,11 +4,10 @@ let express  = require('express'),
     request  = require('request'),
     router   = express.Router(),
     getQuestions = require('../routes/game.js').getQuestions,
-    nextQuestion = require('../routes/game.js').nextQuestion,
+    nextQuestion = require('../routes/game.js').nextQuestion;
 ///// end requirements ////////////////////////////////////////////////////////
 
 // the '/' means '/game, see server.js'
-
 // start and end game. enter/exit room.
 router.route('/:room')
    .get((req, res, next) =>{
