@@ -1,3 +1,6 @@
+// TODO: NO MORE PYRAMIDS!!! REWRITE:
+// http://eladnava.com/write-synchronous-node-js-code-with-es6-generators/
+
 'use strict'
 // global variable
 let rooms = [];
@@ -292,6 +295,7 @@ let makeRooms = function() {
                                                                         console.log('done!');
                                                                         console.log('rooms array is ths long: ',rooms.length);
                                                                         console.log(rooms);
+                                                                        mongoose.disconnect();
                                                                      }}) // end movies
                                                             }}) // end business
                                                    }}) // end sports
