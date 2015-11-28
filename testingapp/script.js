@@ -5,8 +5,7 @@ let turnCount = 1,   thisRoom = '',
 
 // keep track of time:
 let startRound = parseInt(Date.now()), // time round starts
-    endRound = 0, // time round ends
-    score = 0,
+    score = 0, // initial score
     timerLength = 10, // how many seconds on the clock
     ticks = timerLength; // show countdown.
 
@@ -26,7 +25,7 @@ let timer = undefined, countdown = undefined, button = undefined;
       getScore();
 
       // set or restart timer
-      (turnCount < 10) ? resetTimers() : endGame();
+      (turnCount <= 10) ? resetTimers() : endGame();
 
       // pop bubbles
       return false;
@@ -39,11 +38,9 @@ let clickButt = function(){
 }
 
 let getScore = function(){
-   endRound = parseInt(Date.now());
-
-   let diff = endRound - startRound;
-   console.log('time elapsed since start is: '+(diff/1000)+' seconds');
-   score += (diff > 7000) ? diff : 0;
+   let diff = parseInt(Date.now()) - startRound;
+   console.log('time elapsed since start is: '+(diff-1000/1000)+' seconds');
+   score += (diff > 4000) ? 0 : diff/10;
 
    console.log('score is: ',score,' at end of turn: ',turnCount);
    turnCount++;
