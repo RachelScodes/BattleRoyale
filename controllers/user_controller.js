@@ -20,9 +20,11 @@ function createUser(req, res) {
     email: req.body.email,
     password: req.body.password
   });
-
+  console.log(req.body);
+  console.log('inside createUser');
   userObj.save((err, user) => {
     if (err) {
+      console.log('about to error yo');
       return res.status(401).send({message: err.errmsg});
     } else {
       return res.status(200).send(user);
@@ -96,9 +98,11 @@ function deleteUser(req, res) {
 ///// in a JSON response. Mongoose is used to find the user and jsonwebtoken to create the token
 function auth(req, res) {
   User.findOne({
-    name: req.body.name
+    // name: req.body.name
+      username: req.body.username
   }, function(err, user){
     if (err) throw err;
+    console.log('yo yo yo')
 
     if(!user) {
       ///// check for user in database
