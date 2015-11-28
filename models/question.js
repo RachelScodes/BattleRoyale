@@ -1,5 +1,6 @@
 'use strict';
 let mongoose = require('mongoose');
+let Category = require('./category.js');
 ///// end requirements /////////////////////////////////////////////////////////
 
 let QuestionSchema = new mongoose.Schema({
@@ -14,16 +15,14 @@ let QuestionSchema = new mongoose.Schema({
    q_correct_option: Number,
    // q_difficulty_level: Number,
    q_difficulty_level: { type: Number, max: 2 },
-   q_used: Date
+   q_used: Boolean,
+   cat_name: String,
 });
 
 QuestionSchema.pre('save', function(next) {
-	let now = new Date();
-	this.q_used = now;
-	if ( !this.created_at ){
-		this.created_at = now;
-	}
-	next();
+  let catId = this.q_category_id;
+  let thisCat = Category.find({id = catId})
+  this.catname = category['title']
 });
 
 let Question = mongoose.model('Question', QuestionSchema);

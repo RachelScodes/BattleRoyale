@@ -3,17 +3,16 @@
 let jwt = require('jsonwebtoken');
 let express = require('express');
 let User = require('../models/user');
-// let secret = 'thissecretissofetch'; ///// Remember to pull out and place in our config.js file
 let router = express.Router();
 let expressjwt = require('express-jwt');
 let app = express();
-let config = require('../config');
-app.set('soSecret', config.secret); // set secret variable
+let config = require('../config'); ///// require config file to get our secret - will have to move into bash profile later
+app.set('soSecret', config.secret); ///// set secret variable
+let routes = require('../routes/user_routes');
 
-///// the '/' means '/user, see server.js'
-
-///// create (POST http://localhost:3000/user/signup) ////////////////////////////////////////////////////////////////////////
-router.post('/signup', function(req, res) { // call once hit submit // test in postman
+///// create user (POST http://localhost:3000/user/signup) ///////////////////////////////////////////////////////////////////////////////////
+///// not protected - see user_routes.js
+function createUser(req, res) {
   console.log("signup route hit");
   console.log(req.body);
   let userObj = new User({
@@ -28,33 +27,88 @@ router.post('/signup', function(req, res) { // call once hit submit // test in p
     } else {
       return res.status(200).send(user);
     }
+    console.log(user);
   });
-})
-////////////////////////////////////////////////////////////////////////////////
+}
 
-///// http://localhost:3000/user/authenticate //////////////////////////////////
-router.get('/authenticate', function(req, res){
-  console.log('hit /authenticate');
-  res.send('/ hit /authenticate'); // test in postman
-});
+///// show all users (GET http://localhost:3000/user/users) //////////////////////////////////////////////////////////////////////////////////
+///// shows the entire user obj, including encrypted passwords!
+function showAllUsers(req, res) {
+  User.find({}, function(err, users) {
+    console.log('hit /users/show')
+    res.send(users);
+  });
+}
 
-///// authentication (POST http://localhost:3000/user/authenticate) ////////////
+///// edit user (PUT http://localhost:3000/user/edit) ////////////////////////////////////////////////////////////////////////////////////////
+// function editUser(req, res) {
+//   let userParams = req.body.user;
+//   let query = {username: userParams.username}; ///// find user by username
+//   let update = {username: userParams.username, password: userParams.password, email: userParams.email}; ///// update username, password, or email
+//   let options = {new: true}; ///// return modified document/user instead of  original
+//   User.findOneAndUpdate(query, update, options, function(err, user) { ///// finds the first document/user that matches the quest(if present) and updates it
+//     if (err) throw err;
+//     res.send(user);
+//   });
+// }
+
+
+function editUser(req, res) {
+  let userParams = req.body.user;
+  User.findOne({email: userParams.email} , function (err, user) {
+    user.update(
+      {email: userParams.email},
+      {email: userParams.newEmail, username: userParams.newUserName},
+      function (err, user) {
+        resend.send(user);
+      }
+    )
+  })
+}
+
+///// delete user (DELETE http://localhost:3000/user/delete) //////////////////////////////////////////////////////////////////////////////////
+function deleteUser(req, res) {
+  console.log('hit delete')
+  let userParams = req.body.user;
+  User.findOneAndRemove({ username: userParams.username}, function (err, user) {
+    if (err) {
+      console.log('user not deleted');
+      return;
+    } user.remove(function(err) {
+      res.send({"record" : 'deleted'});
+    });
+  });
+}
+
+
+
+///// login (GET http://localhost:3000/user/login) ////////////////////////////////////////////////////////////////////////////////////////////
+// function login() - same as authenticate?
+
+///// logout (GET http://localhost:3000/user/logout) //////////////////////////////////////////////////////////////////////////////////////////
+// function logout()
+
+
+
+///// authentication (POST http://localhost:3000/user/authenticate) //////////////////////////////////////////////////////////////////////////
+///// not protected
 ///// code below allows us to check our user and password and passes back a token
-///// in a JSON response. Mongoose is used to find the user and jsonwebtoken to create the token ////
-router.post('/authenticate', function(req, res){
+///// in a JSON response. Mongoose is used to find the user and jsonwebtoken to create the token
+function auth(req, res) {
   User.findOne({
     name: req.body.name
   }, function(err, user){
     if (err) throw err;
 
     if(!user) {
+      ///// check for user in database
       res.send({ success: false, message: 'Authentication failed. User not found.' });
     } else if (user) {
       ///// check if password matches
       if (user.password != req.body.password) {
         res.send({ success: false, message: 'Authentication failed. Wrong password.' });
       } else {
-        ///// if user is found and password correct
+        ///// if user is found and password correct - assign token
         let token = jwt.sign(user, app.get('soSecret'), {
           expiresIn: 31557600 //// expires in 1 year - seconds in a year
         });
@@ -67,33 +121,17 @@ router.post('/authenticate', function(req, res){
       }
     }
   });
-});
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-///// todo: route middelware to verify tokens
-
-
-///// show all users (GET http://localhost:3000/user/users) ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-///// this route also shows the entire user obj, inclusing encrypted passwords!
-router.get('/users', function(req, res){ ///// working - no users returns empty array as expected
-  User.find({}, function(err, users){
-    res.send(users);
-  });
-});
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+};
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-module.exports = router;
+module.exports = {
+  createUser: createUser,
+  showAllUsers: showAllUsers,
+  auth: auth,
+  editUser: editUser,
+  deleteUser: deleteUser,
+  // login: login,
+  // logout: logout
+}

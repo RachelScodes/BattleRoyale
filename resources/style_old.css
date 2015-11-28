@@ -1,4 +1,11 @@
+<<<<<<< HEAD:resources/style_old.css
 /*body {
+=======
+/*width: calc(100% - (20px * 2))*/
+
+
+body {
+>>>>>>> develop:public/style_old.css
    background-color: grey;
    width: 100%;
    height: 100%;
