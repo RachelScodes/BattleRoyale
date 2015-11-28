@@ -12,7 +12,7 @@ let path = require('path');
 let config = require('./config'); ///// get our config file
 let user = require('./controllers/user_controller');
 let server = require('http').createServer(app);
-var io = require('socket.io').listen(server);
+let io = require('socket.io').listen(server);
 
 app.set('port', 3000);
 
@@ -91,6 +91,10 @@ io.on('connection', function(client) {
     });
 });
 
-app.listen(process.env.PORT || 3000, function(){
-  console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
+// app.listen(process.env.PORT || 3000, function(){
+//   console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
+// });
+
+server.listen(app.get('port'), function() {
+	console.log("Node app is running at localhost:" + app.get('port'));
 });
