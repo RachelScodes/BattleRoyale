@@ -9,9 +9,8 @@ let bodyParser = require('body-parser');
 let jwt = require('jsonwebtoken');
 let logger = require('morgan');
 let path = require('path');
-let config = require('./config'); ///// get our config file
-// let user = require('./controllers/user_controller'); // MODIFIED
-let user = require('./routes/user_routes'); // MODIFIED
+let config = require('./config');
+let user = require('./routes/user_routes');
 let server = require('http').createServer(app);
 var io = require('socket.io').listen(server);
 
@@ -67,6 +66,7 @@ var addedUser = false;
 
 io.on('connection', function(client) {
     console.log("User has connected");
+    console.log(users); ///// so far returns and empty array []
 
     client.on('add user', function(username) {
         var userObj = {};
@@ -75,6 +75,7 @@ io.on('connection', function(client) {
         users.push(userObj);
         addedUser = true;
         io.emit('user joined', users);
+        console.log(users); ///// 2ns attempt
     });
 
     client.on('send message', function(data) {
