@@ -39,10 +39,7 @@ let clickButt = function(){
 
 let getScore = function(){
    let diff = parseInt(Date.now()) - startRound;
-   console.log('time elapsed since start is: '+(diff-1000/1000)+' seconds');
-   score += (diff > 4000) ? 0 : diff/10;
-
-   console.log('score is: ',score,' at end of turn: ',turnCount);
+   calculateScore(diff);
    turnCount++;
 }
 
@@ -83,7 +80,39 @@ function endGame(){
    button.detach();
 }
 
+let calculateScore = function(timeElapsed,choice){
+   let diff = timeElapsed/1000;
+   let raw = calculator(diff)
+   let checked = checkAnswer(raw,choice); score += checked;
+   console.log('you answered in '+diff+' seconds and got '+checked+' points!');
+   console.log('your current score is: ',score,' at the end of turn: ',turnCount);
+}
+
+let calculator = function(d){
+   if (d <= 2){
+      return 10000
+   } else if (d <= 3){
+      return 6000
+   } else if (d <= 4) {
+      return 3000
+   } else if (d <=5) {
+      return 1000
+   } else {
+      return 0
+   }
+}
+
+let checkAnswer = function(points,answer){
+   console.log('ajax call checks q; returns true or false');
+   return (true) ? points : (points * -1);
+}
+
+
 setTimer();
+
+
+
+
 
 
 // 0. on lobby page? call start game using name of room as param
