@@ -19,23 +19,24 @@ let RoomSchema = new mongoose.Schema({
 // find by name, or find all open rooms.
 RoomSchema.statics = {
    nameIs: function(name, cb) {
-      this.where('name', new RegExp(name, 'i')).exec(cb);
+      return this.find({ name: new RegExp(name, 'i') }, cb);
    },
    isOpen: function(cb){
-      this.where('selectable', new RegExp(true, 'i')).exec(cb);
+      return this.find({selectable: new RegExp(true, 'i') }, cb);
    }
 };
 
 // open and close room via...
 RoomSchema.methods = {
    openRoom: function() {
+      this.questions = [];
       this.selectable = true;
       this.save()
    },
    closeRoom: function() {
       this.selectable = false;
       this.save()
-   },
+   }
 };
 
 let Room = mongoose.model('Room', RoomSchema);
