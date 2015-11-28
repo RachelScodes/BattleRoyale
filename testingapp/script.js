@@ -1,19 +1,21 @@
 'use strict'
-
     // set turnNum to 1.
 let turnCount = 1,   thisRoom = '',
     win = window,    doc = document;
 
 // keep track of time:
-let startRound = Date.now.getTime(), // time round starts
+let startRound = parseInt(Date.now()), // time round starts
     endRound = 0, // time round ends
+    score = 0,
     timerLength = 10, // how many seconds on the clock
     ticks = timerLength; // show countdown.
 
+// initiate intervalIds
+let timer = undefined, countdown = undefined, button = undefined;
+
 (function createButton(){
    // draw & attach button
-   let button = $('<button>')
-   let timer = undefined;
+   button = $('<button>')
    button.attr('id','click-test')
    button.prependTo($('div.question'));
 
@@ -37,12 +39,12 @@ let clickButt = function(){
 }
 
 let getScore = function(start){
-   endRound = Date.now.getTime();
+   endRound = parseInt(Date.now());
 
-   let diff = endRound - startRound
-   let score = (diff < 8000) ? diff : 0;
+   let diff = endRound - startRound;
+   console.log('time elapsed since start is: '+diff/1000+' seconds');
+   score += (diff > 7000) ? diff : 0;
 
-   console.log('ended: ',endRound);
    console.log('score is: ',score,' at end of turn: ',turnCount);
    turnCount++;
 }
@@ -50,42 +52,44 @@ let getScore = function(start){
 let resetTimers = function(){
    // clear the timers
    win.clearInterval(countdown);
-   win.clearInterval(timer);
 
    // start them up again
-   timerDuration = timerLength;
    setClickIn();
 }
 
 let countDown = function(){
-   if (ticks <= 0){
-      let ticker = (ticks % 2 == 1) ? ' seconds...tick' : ' seconds...tock';
+   if (ticks >= 0){
+      let ticker = (ticks % 2 == 0) ? ' seconds...tick' : ' seconds...tock';
       console.log(ticks + ticker);
       ticks--
    } else {
       console.log('BOOM! HEADSHOT!');
-      ticks = timerDuration
+      ticks = timerLength;
+      timesUp()
    }
 }
 
-function timesUpIn(){
+function timesUp(){
    // new round starting
-   startRound = Date.now.getTime(),
+   startRound = parseInt(Date.now()),
    console.log('started: ',startRound);
 
-   // time is up in....
-   countdown = win.setInterval(countDown,1000)
-   timer = win.setInterval(clickButt, timerLength*1000)
+   clickButt()
 }
 
 function setClickIn(){
-   countDown();
-   timesUpIn();
+   ticks = timerLength;
+   // time is up in....
+   countdown = win.setInterval(countDown,1000)
 }
 
 function endGame(){
    console.log('GAME OVER!');
 }
+
+setClickIn();
+
+
 // 0. on lobby page? call start game using name of room as param
 // startgame(‘roomname’) = >
 // get :/roomname
