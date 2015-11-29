@@ -11,54 +11,52 @@
    <body>
       <!-- container for whole ap -->
       <div class="container">
-         <div id="landing">
-            <div id="loginpage">
-               <!-- create user div -->
-               <div id="createuserpage">
-                 <div class="createform">
-                   <input type="text" id="login-new" placeholder="Choose your Battletag">
-                   <input type="text" id="email-new" placeholder="Email@domain.com">
-                   <input type="text" id="password-new" placeholder="Create your password">
-                   <button type="button" id="create-user-submit-button">Submit</button>
-                 </div>
-               </div>
-               <!-- login page div-->
-               <div class="loginform">
-                 <input type="text" id="login-input" placeholder="Log-in with your Battletag">
-                 <input type="text" id="password-input" placeholder="Enter your password">
-                 <button type="button" id="login-submit-button">Submit</button>
-               </div>
-               <!-- login/out -->
-               <!-- add authenticate-login page to test authenticate in lieu of socket login - how to combine the two or how to organize? -->
-               <div id="authenticate-page">
-                  <div class="authenticate-login-form">
-                    <input type="text" id="authenticate-username-input" placeholder="Log-in with your Battletag">
-                    <input type="text" id="authenticate-password-input" placeholder="Enter your password">
-                    <button type="button" id="authenticate-submit-button">Authenticate</button>
-                  </div>
-               </div>
-            </div>
-            <div id="vid-div">
-               <video autoplay="true" loop="true">
-                  <source src="/resources/2319236.mp4" type="video/mp4">
-               </video>
-            </div>
-         </div>
-
          <!-- navigation -->
          <div id="top-nav">
             <!-- project who's in the room -->
             <ul id="usernames"></ul>
-            <!-- Nav links -->
-            <div id="links">
-              <ul>
+            <!-- 1. logout, 2. return to lobby/quit game -->
+            <button id="quit"> </button>
+         </div>
+
+         <div id="login-links">
+              <ul id="create-login-buttons">
                 <li class="createuser-link">Create New User</li>
                 <li class="login-link">Login</li>
               </ul>
             </div>
-            <!-- 1. logout, 2. return to lobby/quit game -->
-            <button id="quit"> </button>
+         <div id="landing">
+            <!-- CHANGE LANDING TO login-signup-forms-div -->
+            <!-- All the forms should go in here, properly named -->
+            <!-- login/out sections -->
+
+            <!-- create user div -->
+            <div id="createuserpage">
+              <div class="createform">
+                <input type="text" id="login-new" placeholder="Choose your Battletag">
+                <input type="text" id="email-new" placeholder="Email@domain.com">
+                <input type="text" id="password-new" placeholder="Create your password">
+                <button type="button" id="create-user-submit-button">Submit</button>
+              </div>
+            </div>
+
+            <!-- login page div-->
+            <div class="loginform">
+              <input type="text" id="login-input" placeholder="Log-in with your Battletag">
+              <input type="text" id="password-input" placeholder="Enter your password">
+              <button type="button" id="login-submit-button">Submit</button>
+            </div>
+
+            <!-- add authenticate-login page to test authenticate in lieu of socket login - how to combine the two or how to organize? -->
+            <div id="authenticate-page">
+               <div class="authenticate-login-form">
+                 <input type="text" id="authenticate-username-input" placeholder="Log-in with your Battletag">
+                 <input type="text" id="authenticate-password-input" placeholder="Enter your password">
+                 <button type="button" id="authenticate-submit-button">Authenticate</button>
+               </div>
+            </div>
          </div>
+
 
          <!-- project live chat -->
          <div id="chat-window">
@@ -69,9 +67,9 @@
          <div id="app">
             <!-- waiting/room select -->
             <div id="lobby"></div>
-            <button class="get-question">Get Question</button>
+            <!-- <button class="get-question">Get Question</button> -->
             <!-- trivia game in room -->
-            <div id="game">
+            <div class="game">
                <!-- click to get trivia questions -->
                <div class="question">
                <!-- append question data here -->
@@ -94,5 +92,12 @@
       <script src="helpers.js"></script>
       <script src="script.js"></script>
       <footer>Copyright 2015 by <a href="https://github.com/m428" target="_blank">Mala Nimalasuriya,</a> <a href="https://github.com/RachelScodes" target="_blank">Rachel Smyth,</a> <a href="https://github.com/sp180" target="_blank">Alex Wang</a>. View source on <a href="https://github.com/RachelScodes/BattleRoyale" target="_blank">Github</a></footer>
+
+      <div id="vid-div">
+         <video muted="" autoplay="" loop="" name="ninjas">
+            <source src="https://r14---sn-ab5l6n7e.googlevideo.com/videoplayback?signature=35663B1B3141C2C879D4AE5AF0A914861F39E757.0160E1008B9A1AAF839B4DC5A82D47C24741EE6D&amp;upn=trUBUYvYEnQ&amp;ipbits=0&amp;sparams=dur,expire,id,initcwndbps,ip,ipbits,itag,lmt,mime,mm,mn,ms,mv,pcm2cms,pl,ratebypass,requiressl,source,upn&amp;fexp=9407051,9408209,9408710,9416126,9416985,9417683,9419670,9420452,9422299,9422596,9422618,9422675,9422860,9423489,9423662,9424473,9424963,9425282&amp;itag=22&amp;pl=24&amp;mime=video/mp4&amp;requiressl=yes&amp;ratebypass=yes&amp;id=o-AC2u2agNXdVvSE1f6z5oGxcsv7q7YHtBju4vaT-Y56P6&amp;source=youtube&amp;dur=137.067&amp;expire=1448796326&amp;ip=108.41.22.11&amp;key=cms1&amp;lmt=1401680953183334&amp;sver=3&amp;redirect_counter=1&amp;req_id=6a14f7139aafa3ee&amp;cms_redirect=yes&amp;mm=30&amp;mn=sn-ab5l6n7e&amp;ms=nxu&amp;mt=1448774738&amp;mv=m" type="video/mp4">
+         </video>
+      </div>
+
    </body>
 </html>

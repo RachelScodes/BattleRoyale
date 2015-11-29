@@ -6,41 +6,60 @@ var socket = io(), ///// listens and emits client-side - meat of socket in backe
     myUser;
 
 $(function() {
+
+   // mapping divs to variables for mass attaching/detaching
+   var landingPage   = $('#landing'), // needs to be renamed
+       bgVideo       = $('#vid-div'),
+
+       // navigation bars
+       landingNav    = $('#login-links'),
+       inGameNav     = $('#top-nav'),
+
+       // chatting
+       chatInput     = $('#text-input'),
+       chatWindow    = $('#chat-window'),
+
+       // mini-game
+       gameContainer = $('#app'),
+       lobby         = $('#lobby'),
+       game          = $('.game');
+
 	//these divs will be hidden at the start
-	// $('#loginpage').hide();
+   // CREATE CONTAINING DIV AND HIDE ALL AT START
 	$('#createuserpage').hide();
    $('#authenticate-page').hide(); /////
    $('.loginform').hide()
-   $('#game').hide()
+
+   game.detach()
+   inGameNav.detach()
 
 	$('.login-link').click(function() {
-		$('#links').hide();
 		// $('#loginpage').show(); ///// commented out to render authenticate login and test
       $('#authenticate-page').show(); ///// added to render authenticate login and test
+      $('#createuserpage').hide();
    });
 
+   // create new user - POST http://localhost:3000/user/signup
+   $('.createuser-link').click(function() {
+     $('#authenticate-page').hide();
+     $('#createuserpage').show();
+   });
 
-/// create new user - POST http://localhost:3000/user/signup ///////////////////////
-$('.createuser-link').click(function() {
-  $('#links').hide();
-  $('#createuserpage').show();
-});
-
-$('#create-user-submit-button').click(function() {
- var username = $('#login-new').val();
- var email = $('#email-new').val();
- var password = $('#password-new').val();
- var newUserData = {
-   username: username,
-   email: email,
-   password: password
- }
-  $.ajax({  ///// executes user_controller.js create function
-    url: "/user/signup",
-    method: "POST",
-    data: newUserData
-  }).done(goToLogin); //// show login page
-});
+   $('#create-user-submit-button').click(function() {
+      var username = $('#login-new').val();
+      var email = $('#email-new').val();
+      var password = $('#password-new').val();
+      var newUserData = {
+         username: username,
+         email: email,
+         password: password
+      }
+      $.ajax({  ///// executes user_controller.js create function
+         url: "/user/signup",
+         method: "POST",
+         data: newUserData
+      }).done(goToLogin); //// show login page
+   });
 
 
    var goToLogin = function() {
@@ -49,7 +68,7 @@ $('#create-user-submit-button').click(function() {
       $('#authenticate-submit-login').show(); ///// add login submit button to index.html
    }
 
-//////// authenticate - POST http://localhost:3000/user/authenticate ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+   //// authenticate - POST http://localhost:3000/user/authenticate ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
    $('#authenticate-submit-button').click(function() {
       // console.log('clicked');
       var username = $('#authenticate-username-input').val();
@@ -72,12 +91,13 @@ $('#create-user-submit-button').click(function() {
    }); // end of authenticate submit button jQuery call
 
     var goToLobby = function() {
-      $('#authenticate-page').hide();
-      $('#game').show()
-      $('#vid-div').hide()
-      $('loginpage').css('z-index','-1')
+      landing.detach()
+      landingNav.detach()
+      game.prependTo($('.container'))
+      inGameNav.prependTo($('.container'))
+      bgVideo.css('z-index','-100')
+      console.log(bgVideo.css('z-index'));
     }
-
 
 	$('#compose').keypress(function(event) {
 		if(event.keyCode === 13) {
@@ -91,7 +111,6 @@ $('#create-user-submit-button').click(function() {
 
 
    // SOCKET EVENTS
-
    socket.on('user joined', function(users) {
    	var usersList = $('#usernames');
    	usersList.empty();
