@@ -28,8 +28,6 @@ $(function() {
        game          = $('.game');
 
 	//these divs will be hidden at the start
-   chatInput.detach()
-   chatWindow.detach()
 
    gameContainer.detach()
    lobby.detach()
@@ -106,17 +104,25 @@ $(function() {
       gameContainer.appendTo(containerDiv)
       chatInput.appendTo(containerDiv)
     }
-
+   //  $('#send-message').click(function(e){
+   //    console.log(e);
+   //    console.log($('#compose').val());
+   //    return false
+   //    socket.emit('send message', {name: myUser, message: message});
+   //       $('#compose').val('');
+   //  })
 	$('#compose').keypress(function(event) {
 		if(event.keyCode === 13) {
-			var compose = $('#compose').val();
-         console.log(myUser);
+			var message = $('#compose').val();
 
 			socket.emit('send message', {name: myUser, message: message});
 			$('#compose').val('');
 		}
 	});
-
+   // CAN'T ASSIGN AN EVENT SO SOMETHING THAT'S DETACHED!
+   // I WAS A DUM DUM -rachel :(
+   chatInput.detach()
+   chatWindow.detach()
 
    // SOCKET EVENTS
    socket.on('user joined', function(users) {
