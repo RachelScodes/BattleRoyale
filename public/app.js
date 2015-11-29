@@ -9,7 +9,7 @@ $(function() {
 	//these divs will be hidden at the start
 	$('#loginpage').hide();
 	$('#createuserpage').hide();
-  $('#authenticate-page').hide(); 
+  $('#authenticate-page').hide(); /////
 
 	$('.login-link').click(function() {
 		$('#navigation').hide();
@@ -18,7 +18,8 @@ $(function() {
   });
 
 
-/// create new user - POST http://localhost:3000/user/signup ///////////////////
+/// create new user - POST http://localhost:3000/user/signup ///////////////////////
+$('.createuser-link').click(function() {
   $('#navigation').hide();
   $('#createuserpage').show();
 });
@@ -46,7 +47,7 @@ $('#create-user-submit-button').click(function() {
     $('#submit-login').show(); ///// add login submit button to index.html
   }
 
-//////// authenticate - POST http://localhost:3000/user/authenticate ////////////
+//////// authenticate - POST http://localhost:3000/user/authenticate ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   $('#authenticate-submit-button').click(function() {
     // console.log('clicked');
     var username = $('#authenticate-username-input').val();
