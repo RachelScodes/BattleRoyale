@@ -25,7 +25,7 @@ app.use('/', express.static(__dirname + '/public'));
 ///// connect database /////////////////////////////////////////////////////////
 let mongoose = require('mongoose');
 mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/battle-royale'); ///// can refactor later and pull into config file
-let db = mongoose.connection;
+const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', (callback) => {
   console.log('db connected!');
