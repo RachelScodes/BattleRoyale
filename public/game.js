@@ -16,7 +16,7 @@
 // // draw the game
 //
 
-
+let game = function(){
 // this creates gathers our questions, starts the game
 let startGame = function(rName){
    // let thisRoom = Room.findByName('Lobby',(err, res) => {
@@ -351,3 +351,4 @@ createButton(); assignClicks(); setTimer();
 //     };
 //   });
 // });
+}

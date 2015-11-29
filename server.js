@@ -31,9 +31,9 @@ db.once('open', (callback) => {
 });
 
 ///// write routes below ///////////////////////////////////////////////////////
-app.get('/', function(req, res){ // test route // delete later
-  res.send('hit test route!');
-});
+// app.get('/', function(req, res){ // test route // delete later
+//   res.send('hit test route!');
+// });
 
 ///// require routes
 let homeRoutes = require('./controllers/home_controller' );
