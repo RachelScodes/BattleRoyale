@@ -2,8 +2,8 @@
 <html>
    <head>
      <title>Battle Royale</title>
-     <link rel="stylesheet" href="style-alex.css" charset="utf-8">
-     <!-- <link rel="stylesheet" href="style.css" charset="utf-8"> -->
+     <!-- <link rel="stylesheet" href="style-alex.css" charset="utf-8"> -->
+     <link rel="stylesheet" href="style.css" charset="utf-8">
      <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
      <script src="/socket.io/socket.io.js"></script>
      <script src="/app.js"></script>
@@ -16,43 +16,41 @@
                <!-- create user div -->
                <div id="createuserpage">
                  <div class="createform">
-                   <input type="text" id="login-new" placeholder="Create new username">
-                   <input type="text" id="email-new" placeholder="Put in your email">
-                   <input type="text" id="password-new" placeholder="Create new password">
+                   <input type="text" id="login-new" placeholder="Choose your Battletag">
+                   <input type="text" id="email-new" placeholder="Email@domain.com">
+                   <input type="text" id="password-new" placeholder="Create your password">
                    <button type="button" id="create-user-submit-button">Submit</button>
                  </div>
                </div>
                <!-- login page div-->
                <div class="loginform">
-                 <input type="text" id="login-input" placeholder="Enter your username">
+                 <input type="text" id="login-input" placeholder="Log-in with your Battletag">
                  <input type="text" id="password-input" placeholder="Enter your password">
                  <button type="button" id="login-submit-button">Submit</button>
-               </div>
-
-               <div class="loginform">
-                   <input type="text" id="login-input" placeholder="Enter your username and press enter">
                </div>
                <!-- login/out -->
                <!-- add authenticate-login page to test authenticate in lieu of socket login - how to combine the two or how to organize? -->
                <div id="authenticate-page">
                   <div class="authenticate-login-form">
-                    <input type="text" id="authenticate-username-input" placeholder="Enter your username dude">
+                    <input type="text" id="authenticate-username-input" placeholder="Log-in with your Battletag">
                     <input type="text" id="authenticate-password-input" placeholder="Enter your password">
                     <button type="button" id="authenticate-submit-button">Authenticate</button>
                   </div>
                </div>
             </div>
-            <video autoplay="" loop="">
-               <source src="/resources/2319236.mp4" type="video/mp4">
-            </video>
+            <div id="vid-div">
+               <video autoplay="true" loop="true">
+                  <source src="/resources/2319236.mp4" type="video/mp4">
+               </video>
+            </div>
          </div>
 
          <!-- navigation -->
          <div id="top-nav">
             <!-- project who's in the room -->
-            <div id="users"><ul id="usernames"></ul></div>
+            <ul id="usernames"></ul>
             <!-- Nav links -->
-            <div id="navigation">
+            <div id="links">
               <ul>
                 <li class="createuser-link">Create New User</li>
                 <li class="login-link">Login</li>
@@ -89,8 +87,8 @@
          </div>
 
          <!-- div to enter text -->
-         <div id="form">
-            <input id="message" autocomplete="off" /><button>Send</button>
+         <div id="text-input">
+            <input id="compose" autocomplete="off" /><button>Send</button>
          </div>
       </div>
       <script src="helpers.js"></script>
