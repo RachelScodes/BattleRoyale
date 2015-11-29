@@ -11,21 +11,21 @@
    <body>
       <!-- container for whole ap -->
       <div class="container">
-         <!-- navigation -->
+         <!-- aka inGameNav in app.js -->
          <div id="top-nav">
             <!-- project who's in the room -->
             <ul id="usernames"></ul>
             <!-- 1. logout, 2. return to lobby/quit game -->
             <button id="quit"> </button>
          </div>
-
+         <!-- aka landingNav in app.js -->
          <div id="login-links">
               <ul id="create-login-buttons">
                 <li class="createuser-link">Create New User</li>
                 <li class="login-link">Login</li>
               </ul>
             </div>
-
+         <!-- aka landingPage in app.js -->
          <div id="login-signup">
             <!-- All the forms should go in here, properly named -->
             <!-- login/out sections -->
@@ -63,7 +63,7 @@
             <ul id="messages"></ul>
          </div>
 
-         <!-- app goes here -->
+         <!-- gameContainer in app.js -->
          <div id="app">
             <!-- waiting/room select -->
             <div id="lobby"></div>
@@ -84,7 +84,7 @@
             </div>
          </div>
 
-         <!-- div to enter text -->
+         <!-- chatInput in app.js -->
          <div id="text-input">
             <input id="compose" autocomplete="off" /><button>Send</button>
          </div>
@@ -95,7 +95,7 @@
 
       <div id="vid-div">
          <video muted="" autoplay="" loop="" name="ninjas">
-            <source src="https://r14---sn-ab5l6n7e.googlevideo.com/videoplayback?signature=35663B1B3141C2C879D4AE5AF0A914861F39E757.0160E1008B9A1AAF839B4DC5A82D47C24741EE6D&amp;upn=trUBUYvYEnQ&amp;ipbits=0&amp;sparams=dur,expire,id,initcwndbps,ip,ipbits,itag,lmt,mime,mm,mn,ms,mv,pcm2cms,pl,ratebypass,requiressl,source,upn&amp;fexp=9407051,9408209,9408710,9416126,9416985,9417683,9419670,9420452,9422299,9422596,9422618,9422675,9422860,9423489,9423662,9424473,9424963,9425282&amp;itag=22&amp;pl=24&amp;mime=video/mp4&amp;requiressl=yes&amp;ratebypass=yes&amp;id=o-AC2u2agNXdVvSE1f6z5oGxcsv7q7YHtBju4vaT-Y56P6&amp;source=youtube&amp;dur=137.067&amp;expire=1448796326&amp;ip=108.41.22.11&amp;key=cms1&amp;lmt=1401680953183334&amp;sver=3&amp;redirect_counter=1&amp;req_id=6a14f7139aafa3ee&amp;cms_redirect=yes&amp;mm=30&amp;mn=sn-ab5l6n7e&amp;ms=nxu&amp;mt=1448774738&amp;mv=m" type="video/mp4">
+            <source src="/resources/ninja-video.mp4" type="video/mp4">
          </video>
       </div>
 

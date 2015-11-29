@@ -10,7 +10,8 @@ var socket = io(),
 $(function() {
 
    // mapping divs to variables for mass attaching/detaching
-   var landingPage   = $('#login-signup'), // needs to be renamed
+   var containerDiv  = $('.container'),
+       landingPage   = $('#login-signup'),
        bgVideo       = $('#vid-div'),
 
        // navigation bars
@@ -27,17 +28,22 @@ $(function() {
        game          = $('.game');
 
 	//these divs will be hidden at the start
-   // CREATE CONTAINING DIV AND HIDE ALL AT START
+   chatInput.detach()
+   chatWindow.detach()
+
+   gameContainer.detach()
+   lobby.detach()
+   inGameNav.detach()
+
 	$('#createuserpage').hide();
    $('#authenticate-page').hide(); /////
    $('.loginform').hide()
 
-   game.detach()
-   inGameNav.detach()
 
 	$('.login-link').click(function() {
 		// $('#loginpage').show(); ///// commented out to render authenticate login and test
-      $('#authenticate-page').show(); ///// added to render authenticate login and test
+      $('#authenticate-page').show();
+      $('#authenticate-login-form').show(); ///// added to render authenticate login and test
       $('#createuserpage').hide();
    });
 
@@ -93,12 +99,12 @@ $(function() {
    }); // end of authenticate submit button jQuery call
 
     var goToLobby = function() {
-      landing.detach()
+      landingPage.detach()
       landingNav.detach()
-      game.prependTo($('.container'))
-      inGameNav.prependTo($('.container'))
-      bgVideo.css('z-index','-100')
-      console.log(bgVideo.css('z-index'));
+      inGameNav.appendTo(containerDiv)
+      chatWindow.appendTo(containerDiv)
+      gameContainer.appendTo(containerDiv)
+      chatInput.appendTo(containerDiv)
     }
 
 	$('#compose').keypress(function(event) {
