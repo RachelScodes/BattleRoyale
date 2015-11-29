@@ -17,7 +17,7 @@ router.route('/show')
   .get(user.showAllUsers) ///// show all users
 
 
-router.route('/edit') ///// more testing
+router.route('/edit') ///// needs more testing!
 // .all(expressJWT({
 //   secret: secret,
 //   userProperty: 'auth'
@@ -25,23 +25,21 @@ router.route('/edit') ///// more testing
   .put(user.editUser) ///// edit user
 
 
-router.route('/delete') ///// more testing
+router.route('/delete') ///// needs more testing!
   // .all(expressJWT({
   //   secret: secret,
   //   userProperty: 'auth'
   // }))
-  .delete(user.deleteUser) ///// edit user
+  .delete(user.deleteUser) ///// delete user
 
 
 ///// unprotected user routes //////////////////////////////////////////////////
-router.route('/signup') ///// may need to adjust route to /signup alone
+router.route('/signup')
   .post(user.createUser);
 
-router.route('/authenticate') ///// may need to adjust route to /authenticate alone
+router.route('/authenticate') ///// essentially serves as login route - needs more testing!
   .post(user.auth);
 
-// router.route('/login') ///// may need to adjust route to /login alone
-//   .post(user.login);
 
 // router.route('/user/logout') ///// may need to adjust route to /login alone
 //   .post(user.login);
