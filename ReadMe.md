@@ -37,7 +37,7 @@ I'll say more.
     - CRU, Delete not applicable.
     - 8 static rooms seeded from database.
 
-* **See it in action!:** [On Heroku](https://calm-brushlands-3713.herokuapp.com/)
+* **See it in action!:** [On Heroku](https://mar-battle-royale.herokuapp.com/)
 
 ---
 
