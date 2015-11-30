@@ -24,6 +24,15 @@ body {
    font: 13px Helvetica, Arial;
 }
 
+#loading{
+    width: 40%;
+    height: 50%;
+    position: relative;
+    margin: 40px auto;
+    text-align: center;
+    font-family: 'Black Ops One', cursive;
+}
+
 #authenticate-page {
    background-color: black;
    width: 100%;
