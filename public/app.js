@@ -25,6 +25,7 @@ $(function() {
        chatWindow    = $('#chat-window'),
 
        // mini-game
+       loading       = $('#loading'),
        gameContainer = $('#app'),
        lobby         = $('#lobby'),
        game          = $('.game');
@@ -115,12 +116,17 @@ $(function() {
    }); // end of authenticate submit button jQuery call
 
     var goToLobby = function() {
+      // hide
+      loading.detach()
       landingPage.detach()
       landingNav.detach()
+
+      // show
       inGameNav.appendTo(containerDiv)
       chatWindow.appendTo(containerDiv)
       gameContainer.appendTo(containerDiv)
       chatInput.appendTo(containerDiv)
+      $('#game').addClass('timer')
     }
 
    var punch  = $('<audio>');
