@@ -4,6 +4,9 @@
 
 let express = require('express');
 let app = express();
+let favicon = require('serve-favicon');
+
+
 let expressJWT = require('express-jwt');
 let bodyParser = require('body-parser');
 let jwt = require('jsonwebtoken');
@@ -19,6 +22,7 @@ app.set('port', 3000);
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false}));
+app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use('/', express.static(__dirname + '/public'));
 
 ///// connect database /////////////////////////////////////////////////////////

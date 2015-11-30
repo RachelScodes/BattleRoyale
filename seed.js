@@ -9,12 +9,11 @@ seeder.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/battle-royale', 
     // Load Mongoose models
     seeder.loadModels([
         './models/room.js',
-        './models/question.js',
-        './models/category.js'
+        './models/question.js'
     ]);
 
     // Clear specified collections
-    seeder.clearModels(['Room', 'Question', 'Category'], function() {
+    seeder.clearModels(['Room', 'Question'], function() {
 
         // Callback to populate DB once collections have been cleared
         seeder.populateModels(data);
