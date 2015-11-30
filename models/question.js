@@ -1,6 +1,6 @@
 'use strict';
 let mongoose = require('mongoose');
-let Category = require('./category.js');
+// let Category = require('./category.js');
 ///// end requirements /////////////////////////////////////////////////////////
 
 let QuestionSchema = new mongoose.Schema({
