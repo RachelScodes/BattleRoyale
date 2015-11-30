@@ -32,6 +32,15 @@ userSchema.methods.authenticate = function(password, callback) {
     callback(null, isMatch);
   });
 };
+
+//
+// userSchema.methods.authenticate = function(password, callback) {
+//   bcrypt.compare(password, this.db.model('user').password, function (err, isMatch) {
+//     callback(null, isMatch);
+//   });
+// };
+
+
 ////////////////////////////////////////////////////////////////////////////////
 
 

@@ -89,47 +89,41 @@ function deleteUser(req, res) {
 // function logout()
 
 
-
+//========================================================================================================================
 ///// authentication (POST http://localhost:3000/user/authenticate) //////////////////////////////////////////////////////////////////////////
 ///// not protected
 ///// code below allows us to check our user and password and passes back a token
 ///// in a JSON response. Mongoose is used to find the user and jsonwebtoken to create the token
 function auth(req, res) {
-  User.findOne({
-    // name: req.body.name
-      username: req.body.username ///// return correct user with all object info when inputted through form and postman
-  }, function(err, user){
-    if (err) throw err;
-    console.log('yo yo yo')
-    console.log(user); ///// data shows up in Postman and properly renders if the username is correct - otherwise null
+  User.findOne({username: req.body.username}, function(err, user) {
+    console.log('inside auth function in users controller')
     if(!user) {
       console.log(req.body.username);
       ///// check for user in database
-      res.send({ success: false, message: 'Authentication failed. User not found.' }); ///// not working correctly with form (everyone gets authenticated right now despite their credentials) but working when tested with postman
-      console.log(res.body);
+      res.send({ success: false, message: 'Authentication failed. User not found.' });
+      console.log(res.body + ' - this is the res body');
     } else if (user) {
-      ///// check if password matches
-      if (user.password != req.body.password) {
-        res.send({ success: false, message: 'Authentication failed. Wrong password.' });
-      } else {
-        ///// if user is found and password correct - assign token
-        let token = jwt.sign(user, app.get('soSecret'), {
-          expiresIn: 31557600 //// expires in 1 year - seconds in a year
-        });
-        ///// return the information including token as json
-        res.send({
-          succes: true,
-          message: 'Enjoy the token!',
-          token: token
-        });
-      }
+      console.log(user + 'this is our user right before user.authenticate');
+  user.authenticate(req.body.password, function (err, isMatch) {
+    console.log('inside user.authenticate');
+    if (isMatch) {
+      return res.status(200).send({message: "Valid Credentials", token: jwt.sign(user, app.get('soSecret'))});
+      res.send({
+        succes: true,
+        message: 'Enjoy the token!',
+        token: token
+      });
       console.log('Enjoy the token');
-      console.log(req.body);
+      console.log(req.body + ' this is the request body');
+    } else {
+      console.log('Invalid credentials')
     }
   });
 };
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+});
+}
 
+  
 
 
 module.exports = {
