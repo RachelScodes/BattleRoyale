@@ -1,6 +1,6 @@
-# ![Ninja](https://raw.githubusercontent.com/RachelScodes/BattleRoyale/develop/public/resources/cute-ninja.png) Welcome to BATTLE ROYALE!
+# ![Ninja](https://raw.githubusercontent.com/RachelScodes/BattleRoyale/develop/public/resources/cute-ninja.png)
 
-# BATTLE ROYALE
+# Welcome to BATTLE ROYALE!
 
 Battle royale is "not your mother's trivia game". We have super hard questions and super cute ninjas... need I say more?
 
