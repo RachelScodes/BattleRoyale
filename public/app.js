@@ -132,26 +132,25 @@ $(function() {
    var punch  = $('<audio>');
    punch.attr("src", "/resources/punch.wav");
 
+   $('#send-message').click(function(event){
+      sendMessage();
+      return false
+   })
+
 	$('#compose').keypress(function(event) {
 		if(event.keyCode === 13) {
-         punch[0].play();
-			var message = $('#compose').val();
-			socket.emit('send message', {name: myUser, message: message});
-			$('#compose').val('');
-         chatWindow.animate({scrollTop:$(chatWindow)[0].scrollHeight}, 1000);
+         sendMessage()
 		}
 	});
 
-   $('#send-message').click(function(event){
+   var sendMessage = function(){
+      punch[0].play();
       var message = $('#compose').val();
-      punch.play();
       socket.emit('send message', {name: myUser, message: message});
       $('#compose').val('');
       chatWindow.animate({scrollTop:$(chatWindow)[0].scrollHeight}, 1000);
-   })
+   }
 
-   // CAN'T ASSIGN AN EVENT SO SOMETHING THAT'S DETACHED!
-   // You mean mad genius!!! - mala
    chatInput.detach()
    chatWindow.detach()
 
