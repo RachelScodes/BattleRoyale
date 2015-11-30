@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+   <head>
+     <title>Battle Royale</title>
+     <!-- <link rel="stylesheet" href="style-alex.css" charset="utf-8"> -->
+     <link rel="stylesheet" href="style.css" charset="utf-8">
+     <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+     <script src="/socket.io/socket.io.js"></script>
+     <script src="/app.js"></script>
+   </head>
+   <body>
+      <!-- container for whole ap -->
+      <div class="container">
+         <!-- aka inGameNav in app.js -->
+         <div id="top-nav">
+            <!-- project who's in the room -->
+            <ul id="usernames"></ul>
+            <!-- 1. logout, 2. return to lobby/quit game -->
+            <button id="quit"> </button>
+         </div>
+         <!-- aka landingNav in app.js -->
+         <div id="login-links">
+              <ul id="create-login-buttons">
+                <li class="createuser-link">Create New User</li>
+                <li class="login-link">Login</li>
+              </ul>
+            </div>
+         <!-- aka landingPage in app.js -->
+         <div id="login-signup">
+            <!-- All the forms should go in here, properly named -->
+            <!-- login/out sections -->
+
+            <!-- create user div -->
+            <div id="createuserpage">
+              <div class="createform">
+                <input type="text" id="login-new" placeholder="Choose your Battletag">
+                <input type="text" id="email-new" placeholder="Email@domain.com">
+                <input type="text" id="password-new" placeholder="Create your password">
+                <button type="button" id="create-user-submit-button">Submit</button>
+              </div>
+            </div>
+
+            <!-- login page div-->
+            <div class="loginform">
+              <input type="text" id="login-input" placeholder="Log-in with your Battletag">
+              <input type="text" id="password-input" placeholder="Enter your password">
+              <button type="button" id="login-submit-button">Submit</button>
+            </div>
+
+            <!-- add authenticate-login page to test authenticate in lieu of socket login - how to combine the two or how to organize? -->
+            <div id="authenticate-page">
+               <div class="authenticate-login-form">
+                 <input type="text" id="authenticate-username-input" placeholder="Log-in with your Battletag">
+                 <input type="text" id="authenticate-password-input" placeholder="Enter your password">
+                 <button type="button" id="authenticate-submit-button">Authenticate</button>
+               </div>
+            </div>
+         </div>
+
+
+         <!-- project live chat -->
+         <div id="chat-window">
+            <ul id="messages"></ul>
+         </div>
+
+         <!-- gameContainer in app.js -->
+         <div id="app">
+            <!-- waiting/room select -->
+            <div id="lobby"></div>
+            <!-- <button class="get-question">Get Question</button> -->
+            <!-- trivia game in room -->
+            <div class="game">
+               <!-- click to get trivia questions -->
+               <div class="question">
+               <!-- append question data here -->
+               </div>
+               <div id="all-choices">
+                  <div class="choice" id="uno"></div>
+                  <div class="choice" id="dos"></div>
+                  <div class="choice" id="tres"></div>
+                  <div class="choice" id="four"></div>
+               </div>
+               <div id="end-score"></div>
+            </div>
+         </div>
+
+         <!-- chatInput in app.js -->
+         <div id="text-input">
+            <input id="compose" autocomplete="off" placeholder="Hey enter to send your message to chat! #flameon">
+            <button id="send-message">Send</button>
+         </div>
+      </div>
+      <script src="helpers.js"></script>
+      <!-- <script src="script.js"></script> -->
+      <footer>Copyright 2015 by <a href="https://github.com/m428" target="_blank">Mala Nimalasuriya,</a> <a href="https://github.com/RachelScodes" target="_blank">Rachel Smyth,</a> <a href="https://github.com/sp180" target="_blank">Alex Wang</a>. View source on <a href="https://github.com/RachelScodes/BattleRoyale" target="_blank">Github</a></footer>
+
+      <div id="vid-div">
+         <video muted="" autoplay="" loop="" name="ninjas">
+            <source src="/resources/ninja-video.mp4" type="video/mp4">
+         </video>
+      </div>
+
+   </body>
+</html>
