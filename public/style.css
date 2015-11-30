@@ -375,3 +375,34 @@ footer {
    height: 31px;
    padding: 10px;
 }
+
+@keyframes timer {
+   0%  {
+         border-color: green;
+       }
+   20% {
+         border-color: yellow;
+       }
+   30% {
+         border-color: yellow;
+      }
+   50% {
+         border-color: yellow;
+   }
+   85% {
+         border-color: red;
+   }
+   98% {
+         border-color: red;
+   }
+   100% {
+         border-color: black;
+      }
+}
+
+.game{
+   animation-name: timer;
+   animation-duration: 15s;
+   animation-timing-function: linear;
+   animation-iteration-count: 1;
+}

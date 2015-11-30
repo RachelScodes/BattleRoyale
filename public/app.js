@@ -7,6 +7,8 @@ var socket = io(),
     doc    = document,
     myUser;
 
+
+
 $(function() {
 
    // mapping divs to variables for mass attaching/detaching
@@ -96,21 +98,6 @@ $(function() {
       $('#authenticate-username-input').val('');
    }); // end of authenticate submit button jQuery call
 
-    var goToLobby = function() {
-      landingPage.detach()
-      landingNav.detach()
-      inGameNav.appendTo(containerDiv)
-      chatWindow.appendTo(containerDiv)
-      gameContainer.appendTo(containerDiv)
-      chatInput.appendTo(containerDiv)
-    }
-   //  $('#send-message').click(function(e){
-   //    console.log(e);
-   //    console.log($('#compose').val());
-   //    return false
-   //    socket.emit('send message', {name: myUser, message: message});
-   //       $('#compose').val('');
-   //  })
 	$('#compose').keypress(function(event) {
 		if(event.keyCode === 13) {
 			var message = $('#compose').val();
@@ -120,10 +107,51 @@ $(function() {
          chatWindow.animate({scrollTop:$(chatWindow)[0].scrollHeight}, 1000);
 		}
 	});
+
+   $('#send-message').click(function(event){
+      var message = $('#compose').val();
+
+      socket.emit('send message', {name: myUser, message: message});
+      $('#compose').val('');
+      chatWindow.animate({scrollTop:$(chatWindow)[0].scrollHeight}, 1000);
+   })
    // CAN'T ASSIGN AN EVENT SO SOMETHING THAT'S DETACHED!
    // I WAS A DUM DUM -rachel :(
    chatInput.detach()
    chatWindow.detach()
+
+// STARTING THE GAME ONCE WE ARE LOGGED IN =====================================
+
+   var goToLobby = function() {
+     landingPage.detach()
+     landingNav.detach()
+     pickAroom(getRoom())
+   }
+
+   var pickAroom = function(callback){
+      console.log('queried database for a random room');
+      var num = Math.ceil(Math.random()*7) // seven rooms that are not lobby
+      $.ajax({ ///// executes user_controller.js auth function
+         url: "/room/"+num,
+         method: "POST",
+         data: num
+      }).done(function(){
+         callback(result)
+      })
+   }
+
+   var startGame = function(){
+      inGameNav.appendTo(containerDiv)
+      chatWindow.appendTo(containerDiv)
+      gameContainer.appendTo(containerDiv)
+      chatInput.appendTo(containerDiv)
+      let data = {
+         room: roomName,
+      }
+      socket.emit('send message', data);
+   }
+
+
 
    // SOCKET EVENTS
    socket.on('user joined', function(users) {
@@ -141,5 +169,11 @@ $(function() {
    	var message = $('<li>');
    	message.text(data.name + " : " + data.message);
    	chatList.append(message);
+   });
+
+   socket.on('start game', function(data) {
+      // use data to populate divs
+      // remove loading screen
+      // setTimer()
    });
 })
