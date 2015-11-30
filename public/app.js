@@ -90,25 +90,26 @@ $(function() {
       authenticateYesNo(response)
     });
 
-
-var authenticateYesNo = function(response) {
-  console.log(response);
-  console.log(response.token) // says false
-  // console.log(response.token);
-  if (response.token != null) {
-    console.log('true! - this user has a token!');
-    goToLobby();
-  } else {
-    console.log('false - this user was not assigned a token');
-    $('#authenticate-username-input').val('');
-    $('#authenticate-password-input').val('');
-    goToLogin();
-  }
-};
+     // where does this go?
       myUser = username;
       socket.emit('add user', username);
       $('#authenticate-username-input').val('');
    }); // end of authenticate submit button jQuery call
+
+   var authenticateYesNo = function(response) {
+     console.log(response);
+     console.log(response.token) // says false
+     // console.log(response.token);
+     if (response.token != null) {
+       console.log('true! - this user has a token!');
+       goToLobby();
+     } else {
+       console.log('false - this user was not assigned a token');
+       $('#authenticate-username-input').val('');
+       $('#authenticate-password-input').val('');
+       goToLogin();
+     }
+   };
 
     var goToLobby = function() {
       landingPage.detach()
@@ -128,10 +129,54 @@ var authenticateYesNo = function(response) {
          chatWindow.animate({scrollTop:$(chatWindow)[0].scrollHeight}, 1000);
 		}
 	});
+
+
+   $('#send-message').click(function(event){
+      var message = $('#compose').val();
+
+      socket.emit('send message', {name: myUser, message: message});
+      $('#compose').val('');
+      chatWindow.animate({scrollTop:$(chatWindow)[0].scrollHeight}, 1000);
+   })
+
    // CAN'T ASSIGN AN EVENT SO SOMETHING THAT'S DETACHED!
    // You mean mad genius!!! - mala
    chatInput.detach()
    chatWindow.detach()
+
+
+   // STARTING THE GAME ONCE WE ARE LOGGED IN =====================================
+
+      var goToLobby = function() {
+        landingPage.detach()
+        landingNav.detach()
+        pickAroom(getRoom())
+      }
+
+      var pickAroom = function(callback){
+         console.log('queried database for a random room');
+         var num = Math.ceil(Math.random()*7) // seven rooms that are not lobby
+         $.ajax({ ///// executes user_controller.js auth function
+            url: "/room/"+num,
+            method: "POST",
+            data: num
+         }).done(function(){
+            callback(result)
+         })
+      }
+
+      var startGame = function(){
+         inGameNav.appendTo(containerDiv)
+         chatWindow.appendTo(containerDiv)
+         gameContainer.appendTo(containerDiv)
+         chatInput.appendTo(containerDiv)
+         let data = {
+            room: roomName,
+         }
+         socket.emit('send message', data);
+      }
+
+
 
    // SOCKET EVENTS
    socket.on('user joined', function(users) {
@@ -149,5 +194,12 @@ var authenticateYesNo = function(response) {
    	var message = $('<li>');
    	message.text(data.name + " : " + data.message);
    	chatList.append(message);
+   });
+
+
+   socket.on('start game', function(data) {
+      // use data to populate divs
+      // remove loading screen
+      // setTimer()
    });
 })
