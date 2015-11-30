@@ -3,7 +3,7 @@
 // 'use strict'    //// why is this commented out?
 console.log('script loaded');
 ///// listens and emits client-side - meat of socket in backend, just require in front end
-var socket = io(),
+var socket = io(), ///tester
     doc    = document,
     myUser;
 
