@@ -1,4 +1,4 @@
-# ![Ninja](https://raw.githubusercontent.com/RachelScodes/BattleRoyale/develop/public/resources/cute-ninja.png)
+![Ninja](https://raw.githubusercontent.com/RachelScodes/BattleRoyale/develop/public/resources/cute-ninja.png)
 
 # Welcome to BATTLE ROYALE!
 
@@ -72,8 +72,8 @@ We divided some responsibilities between the three of us
 |team member | responsibilities |
 |-------------|------------------|
 |Alex | sockets and chat on back and front end|
-|Mala | security, backend for users, mitigating with sockets, server management, user model design, wireframes |
-|Rachel | API access, database setup, front and backend for game, graphics, team management? |
+|Mala | security-salted/hashed/smothered/covered passwords, backend & database for users, mitigating with sockets, server management, user model design, wireframes |
+|Rachel | API access, database for game models and seeding, front and backend for game, graphics, team management? |
 
 Sometimes we would work in groups of two to combine our work.
 
