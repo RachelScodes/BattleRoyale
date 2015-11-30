@@ -8,12 +8,19 @@ let question = require('../controllers/qController')
 /* so fresh and so clean! */
 
 router.route('/start/:roomName')
-   .get(room.fetch(req.params.roomName))
+   .get(room.fetchRoom(req.params.roomName))
 
 router.route('/end/:roomName')
-   .put(room.update(req.params.roomName));
+   .put(room.updateRoom(req.params.roomName));
 
-router.route('/')
-   .get(room.fetch(req.params.roomName))
+router.route('/question/get/:roomName/:index')
+   .get(room.fetchQuestion(req.params.roomName,index))
+   router.route('/user/signup')
+
+router.route('/question/new')
+   .post(question.create);
+
+router.route('/question/new')
+   .post(question.create);
 
 module.exports = router;
