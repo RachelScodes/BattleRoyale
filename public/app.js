@@ -36,14 +36,13 @@ $(function() {
    inGameNav.detach()
 
 	$('#createuserpage').hide();
-   $('#authenticate-page').hide(); /////
+   $('#authenticate-page').hide();
    $('.loginform').hide()
 
 
 	$('.login-link').click(function() {
-		// $('#loginpage').show(); ///// commented out to render authenticate login and test
       $('#authenticate-page').show();
-      $('#authenticate-login-form').show(); ///// added to render authenticate login and test
+      $('#authenticate-login-form').show();
       $('#createuserpage').hide();
    });
 
@@ -78,25 +77,51 @@ $(function() {
 
    //// authenticate - POST http://localhost:3000/user/authenticate ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
    $('#authenticate-submit-button').click(function() {
-      // console.log('clicked');
       var username = $('#authenticate-username-input').val();
       var password = $('#authenticate-password-input').val();
       var userLoginData = {
          username: username,
          password: password
       }
-      // console.log(userLoginData);
       $.ajax({ ///// executes user_controller.js auth function
          url: "/user/authenticate",
          method: "POST",
          data: userLoginData
-      }).done(goToLobby)
+    }).done(function(response) {
+      console.log('inside promise')
+      authenticateYesNo(response)
+    });
 
-      // console.log(username + 'this should be username');
+
+    var authenticateYesNo = function(response) {
+      console.log(response);
+      console.log(response.token) // says false
+      // console.log(response.token);
+      if (response.token != null) {
+        console.log('true! - this user has a token!');
+        goToLobby();
+      } else {
+        console.log('false - this user was not assigned a token');
+        $('#authenticate-username-input').val('');
+        $('#authenticate-password-input').val('');
+        goToLogin();
+      }
+    };
+
+     // where does this go?
       myUser = username;
       socket.emit('add user', username);
       $('#authenticate-username-input').val('');
    }); // end of authenticate submit button jQuery call
+
+    var goToLobby = function() {
+      landingPage.detach()
+      landingNav.detach()
+      inGameNav.appendTo(containerDiv)
+      chatWindow.appendTo(containerDiv)
+      gameContainer.appendTo(containerDiv)
+      chatInput.appendTo(containerDiv)
+    }
 
 	$('#compose').keypress(function(event) {
 		if(event.keyCode === 13) {
@@ -115,42 +140,42 @@ $(function() {
       $('#compose').val('');
       chatWindow.animate({scrollTop:$(chatWindow)[0].scrollHeight}, 1000);
    })
+
    // CAN'T ASSIGN AN EVENT SO SOMETHING THAT'S DETACHED!
-   // I WAS A DUM DUM -rachel :(
+   // You mean mad genius!!! - mala
    chatInput.detach()
    chatWindow.detach()
 
-// STARTING THE GAME ONCE WE ARE LOGGED IN =====================================
+   // STARTING THE GAME ONCE WE ARE LOGGED IN =====================================
 
-   var goToLobby = function() {
-     landingPage.detach()
-     landingNav.detach()
-     pickAroom(getRoom())
-   }
+      // var goToLobby = function() {
+      //   landingPage.detach()
+      //   landingNav.detach()
+      // //   pickAroom(getRoom())
+      // }
 
-   var pickAroom = function(callback){
-      console.log('queried database for a random room');
-      var num = Math.ceil(Math.random()*7) // seven rooms that are not lobby
-      $.ajax({ ///// executes user_controller.js auth function
-         url: "/room/"+num,
-         method: "POST",
-         data: num
-      }).done(function(){
-         callback(result)
-      })
-   }
-
-   var startGame = function(){
-      inGameNav.appendTo(containerDiv)
-      chatWindow.appendTo(containerDiv)
-      gameContainer.appendTo(containerDiv)
-      chatInput.appendTo(containerDiv)
-      let data = {
-         room: roomName,
-      }
-      socket.emit('send message', data);
-   }
-
+      // var pickAroom = function(callback){
+      //    console.log('queried database for a random room');
+      //    var num = Math.ceil(Math.random()*7) // seven rooms that are not lobby
+      //    $.ajax({ ///// executes user_controller.js auth function
+      //       url: "/room/"+num,
+      //       method: "POST",
+      //       data: num
+      //    }).done(function(){
+      //       callback(result)
+      //    })
+      // }
+      //
+      // var startGame = function(){
+      //    inGameNav.appendTo(containerDiv)
+      //    chatWindow.appendTo(containerDiv)
+      //    gameContainer.appendTo(containerDiv)
+      //    chatInput.appendTo(containerDiv)
+      //    let data = {
+      //       room: roomName,
+      //    }
+      //    socket.emit('send message', data);
+      // }
 
 
    // SOCKET EVENTS
