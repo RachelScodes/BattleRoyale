@@ -43,8 +43,8 @@ let userRoutes = require('./routes/user_routes'); // MODIFIED
 app.use('/user', user);
 
 // not needed because we'll be using ajax to make requests?
-let gameRoutes = require('./controllers/game_controller' );
-app.use('/game', gameRoutes);
+// let gameRoutes = require('./controllers/game_controller' );
+// app.use('/game', gameRoutes);
 
 
 

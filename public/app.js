@@ -117,6 +117,7 @@ $(function() {
 
 			socket.emit('send message', {name: myUser, message: message});
 			$('#compose').val('');
+         chatWindow.animate({scrollTop:$(chatWindow)[0].scrollHeight}, 1000);
 		}
 	});
    // CAN'T ASSIGN AN EVENT SO SOMETHING THAT'S DETACHED!

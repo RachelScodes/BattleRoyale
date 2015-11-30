@@ -137,6 +137,8 @@ body {
     width: 75%;
     height: 10%;
     border: 2px solid white;
+    background-color: black;
+    position: absolute;
 }
 
 .container {
@@ -221,23 +223,26 @@ div#login-links {
    right: 0;
    top: 0;
    z-index: 0;
-   background-color: rgba(0,0,0,.9);
+   background-color: rgba(0,0,0,1);
+   overflow-y: scroll;
+   overflow-wrap: break-word;
+   overflow-x: hidden;
 }
 
 #messages {
 	position: relative;
 	width: 100%;
 	right: 0;
-	margin: 0;
+	margin-bottom: 0;
 	padding: 0;
 	list-style-type: none;
-   color: black;
+	color: black;
 	background-color: rgba(255,255,255,0.9);
 }
 
 #messages li {
-	padding: 5px 10px;
-	font-size: 25px;
+	padding: 3px 10px;
+	font-size: 15px;
 }
 
 #messages li:nth-child(odd) {
@@ -254,6 +259,7 @@ div#login-links {
    bottom: 30px;
    position: absolute;
    z-index: 0;
+   background-color: rgba(0,0,0,0.8);
 }
 
 #text-input input {
@@ -289,8 +295,9 @@ div#app{
 .game {
     width: 100%;
     height: 100%;
-    border: 2px solid white;
-    background-color: rgba(0, 0, 0, 0.5);
+    border: 16px solid white;
+    background-color: rgba(0, 0, 0, 0.6);
+    box-sizing: border-box;
 }
 
 .question {
@@ -299,6 +306,7 @@ div#app{
     border-radius: 10px;
     border: 2px dashed white;
     margin: 35px auto 0 auto;
+    background-color: black;
 }
 
 div#all-choices {
@@ -313,6 +321,7 @@ div.choice{
     border-radius: 10px;
     height: 20%;
     margin-top: 9%;
+    background-color: black;
 }
 .choice:hover{
     background-color: darkgrey;
