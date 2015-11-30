@@ -10,7 +10,7 @@ seeder.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/battle-royale', 
     seeder.loadModels([
         './models/room.js',
         './models/question.js',
-        './models/category.js'
+      //   './models/category.js'
     ]);
 
     // Clear specified collections
