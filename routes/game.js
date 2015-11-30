@@ -15,7 +15,7 @@ router.route('/end/:roomName')
 
 router.route('/question/get/:roomName/:index')
    .get(room.fetchQuestion(req.params.roomName,index))
-   router.route('/user/signup')
+  //  router.route('/user/signup')
 
 router.route('/question/new')
    .post(question.create);
