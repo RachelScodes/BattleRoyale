@@ -7,6 +7,8 @@ var socket = io(), ///tester
     doc    = document,
     myUser;
 
+
+
 $(function() {
 
    // mapping divs to variables for mass attaching/detaching
@@ -121,20 +123,22 @@ $(function() {
       chatInput.appendTo(containerDiv)
     }
 
+   var punch  = $('<audio>');
+   punch.attr("src", "/resources/punch.wav");
+
 	$('#compose').keypress(function(event) {
 		if(event.keyCode === 13) {
+         punch[0].play();
 			var message = $('#compose').val();
-
 			socket.emit('send message', {name: myUser, message: message});
 			$('#compose').val('');
          chatWindow.animate({scrollTop:$(chatWindow)[0].scrollHeight}, 1000);
 		}
 	});
 
-
    $('#send-message').click(function(event){
       var message = $('#compose').val();
-
+      punch.play();
       socket.emit('send message', {name: myUser, message: message});
       $('#compose').val('');
       chatWindow.animate({scrollTop:$(chatWindow)[0].scrollHeight}, 1000);
@@ -144,7 +148,6 @@ $(function() {
    // You mean mad genius!!! - mala
    chatInput.detach()
    chatWindow.detach()
-
 
    // STARTING THE GAME ONCE WE ARE LOGGED IN =====================================
 
@@ -178,7 +181,6 @@ $(function() {
       // }
 
 
-
    // SOCKET EVENTS
    socket.on('user joined', function(users) {
    	var usersList = $('#usernames');
@@ -196,7 +198,6 @@ $(function() {
    	message.text(data.name + " : " + data.message);
    	chatList.append(message);
    });
-
 
    socket.on('start game', function(data) {
       // use data to populate divs
