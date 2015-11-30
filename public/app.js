@@ -123,10 +123,14 @@ $(function() {
       chatInput.appendTo(containerDiv)
     }
 
+   punch  = $('<audio'>);
+   // doc.createElement("audio");
+   punch.attr("src", "/resources/punch.wav");
+
 	$('#compose').keypress(function(event) {
 		if(event.keyCode === 13) {
 			var message = $('#compose').val();
-
+         punch.play();
 			socket.emit('send message', {name: myUser, message: message});
 			$('#compose').val('');
          chatWindow.animate({scrollTop:$(chatWindow)[0].scrollHeight}, 1000);
@@ -135,7 +139,7 @@ $(function() {
 
    $('#send-message').click(function(event){
       var message = $('#compose').val();
-
+      punch.play(); 
       socket.emit('send message', {name: myUser, message: message});
       $('#compose').val('');
       chatWindow.animate({scrollTop:$(chatWindow)[0].scrollHeight}, 1000);

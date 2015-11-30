@@ -205,11 +205,15 @@ div#login-links {
 }
 
 #usernames li {
-   color: cornflowerblue;
-   padding-bottom: 15px;
-   padding-top: 15px;
+	color: cornflowerblue;
+	padding-bottom: 15px;
+	padding-top: 15px;
+	padding-left: 20px;
 }
 
+#usernames li+li {
+    padding-left: 10px;
+}
 
 #quit {
    width: 100px;
